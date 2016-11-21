@@ -1,0 +1,171 @@
+\documentclass[a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some common includes. Add additional includes you need.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{ngerman}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[margin=23mm,bottom=30mm]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{amsmath,amsfonts,amssymb,amsthm}
+\RequirePackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines for mathematical notation. Add additional defines as needed.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\O{\mathcal{O}}
+\def\sort{\mathrm{sort}}
+\def\scan{\mathrm{scan}}
+\def\dist{\mathrm{dist}}
+
+\setlength{\parindent}{0cm}
+\renewcommand{\refname}{Quellen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definition of the assignment header
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{/Users/larspetersen/JWGU/Prg/header.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Set option "german" or "english", depending on what language the
+% default texts should be in.
+\ExecuteOptions{german}
+\ProcessOptions
+
+% Enter the lecture name and semester
+\lecture{Einf\"uhrung in die Programmierung}
+\semester{Winter 2016/2017}
+
+% Enter your data: Name, Matrikelnummer (student ID number) and group
+\student{Qasim Raza, Lars Petersen}{6360278, 6290157}{11}
+% Tutorin: sabrinasafre@gmail.com
+
+% Which assignment is this?
+\assignment{3}
+
+% The environment "exercise" takes one parameter (the exercise number). 
+% This way you can skip exercises if you like. Example:
+% 
+% \assignment{3}
+% \begin{exercise}{8}
+% ...
+% \end{exercise}
+% 
+% The solution to exercise 3.8 (3rd assignment, 8th exercise) goes where 
+% the dots are.
+
+
+\begin{document}
+
+
+
+\begin{exercise}{2}
+
+\begin{itemize}
+
+\item[(a)] Dokumentation der Testf\"alle f\"ur das einfache Programm:
+
+
+\begin{center}
+\begin{tabular}{| p{2.5cm} | p{2.2cm} | p{10cm} |}
+		\hline
+		Funktionalit\"at & Eingabe & Verhalten des Programms\\ \hline \hline
+		
+		Begr\"u\ss{}ung & 
+		& In der Konsole wird eine allgemeine Begr\"u\ss{}ung ausgegeben. \\ \hline
+		
+		Reihenfolge der Spielz\"uge & 
+		& Die Spieler sind abwechselnd an der Reihe. In der Konsole wird
+		angezeigt, welcher Spieler den n\"achsten Zug vornehmen soll.\\ \hline
+		
+		Visualisierung Spielfeld & 
+		& Das Spielfeld wird nach jedem Zug in aktualisierter Form in der Konsole dargestellt. \\ \hline
+		
+		Spaltenangabe des Spielers & Sonderzeichen \newline oder Buchstabenfolge 
+		& Eingabe wird abgefangen. Der Spieler wird darauf hingewiesen,
+		dass er keine ganze Zahl eingegeben hat.\\ \hline
+		
+		Spaltenangabe des Spielers & \texttt{int}-Literal \newline $< 1$ oder $> 8$
+		& Eingabe wird abgefangen. Der Spieler wird darauf hingewiesen,
+		dass die angegebene Spalte nicht im vorgegebenen Bereich lag oder die Spalte bereits vollst\"andig belegt ist. \\ \hline
+		
+		Spaltenangabe des Spielers & Keyboard \newline Interrupt
+		& Eingabe wird abgefangen. Das Spiel wird beendet. Die Spieler erhalten in der Konsole den Hinweis, dass ein
+		Keyboard Interrupt erfolgt ist.\\ \hline
+		
+		Spielgewinn &
+		& Es wird NICHT gepr\"uft, ob ein Zug ein Gewinnzug ist oder nicht. \\ \hline
+		
+		Spielende \newline (regul\"ar) &
+		& Nach 48 erfolgten Z\"ugen endet das Spiel, da alle Felder belegt sind und kein weiterer Zug mehr m\"oglich ist.
+		Die Spieler erhalten in der Konsole den Hinweis, dass das Spiel beendet ist. \\ \hline
+		\end{tabular}
+\end{center}
+
+
+\item[(b)] Dokumentation der Testf\"alle f\"ur das erweiterte Programm. Die ersten sechs der in (a) genannten Testf\"alle sind auch hier anwendbar und deshalb nicht mehr zus\"atzlich aufgef\"uhrt.
+
+\begin{center}
+	\begin{tabular}{| p{2.5cm} | p{2.2cm} | p{10cm} |}
+		\hline
+		Funktionalit\"at & Eingabe & Verhalten des Programms\\ \hline \hline
+		
+		Spielgewinn &
+		& Nach jedem Zug eines Spielers wird gepr\"uft, ob eine der Gewinnkonfiguration erreicht wurde. Falls ja, wird das
+		Spiel beendet. Die Spieler erhalten in der Konsole den Hinweis, wer gewonnen hat und dass das Spiel beendet
+		ist. \\ \hline
+		
+		Spielgewinn & [1]: 2, 3, 4, 4 \newline [2]: 1, 1, 1 &
+		Spieler 1 hat gewonnen. Das Spiel ist beendet. Beide Informationen erscheinen in der Konsole. \\ \hline
+		
+		Spielgewinn & [1]: 1, 1, 1, 1 \newline [2]: 2, 3, 4, 4 &
+		Spieler 2 hat gewonnen. Das Spiel ist beendet. Beide Informationen erscheinen in der Konsole. \\ \hline
+		
+		Spielende \newline (regul\"ar) &
+		& Nach 48 erfolgten Z\"ugen ohne Gewinner endet das Spiel unentschieden, da alle Felder belegt sind und kein
+		weiterer Zug mehr m\"oglich ist. Die Spieler erhalten in der Konsole den Hinweis, dass das Spiel unentschieden
+		endete. \\ \hline
+	\end{tabular}
+\end{center}
+
+\newpage
+
+\item[(c)] Dokumentation der Testf\"alle f\"ur das Programm, dass auch den Computer als Gegner nutzen kann.
+Die ersten sechs der in (a) genannten Testf\"alle sind auch hier anwendbar und deshalb nicht mehr zus\"atzlich aufgef\"uhrt. Zudem sind die Testf\"alle aus (b) ebenfalls \"ubertragbar, so dass der Zwei-Spieler-Modus abgedeckt ist und nicht mehr gesondert aufgef\"uhrt wird.
+
+\begin{center}
+	\begin{tabular}{| p{2.5cm} | p{2.2cm} | p{10cm} |}
+		\hline
+		Funktionalit\"at & Eingabe & Verhalten des Programms\\ \hline \hline
+		
+		Wahl des \newline Spielmodus & $0$ oder $1$
+		& Bei $0$ wird der Zwei\--Spieler\--Modus gew\"ahlt. Bei $1$ das Spiel gegen den Computer. Der Modus wird dem Nutzer anf\"anglich angezeigt. \\ \hline
+		
+		Wahl der Spielreihenfolge im Spiel gegen den Com\-puter & $0$ oder $1$
+		& Bei $0$ wird der Zwei-Spieler-Modus gew\"ahlt. Bei $1$ das Spiel gegen den Computer.\\ \hline
+
+		Spielgewinn &
+		& Nach jedem Zug $-$ Spieler oder Computer $-$ wird gepr\"uft, ob eine der Gewinnkonfiguration erreicht wurde. Falls ja, wird das
+		Spiel beendet. In der Konsole wird angezeigt, wer gewonnen hat und dass das Spiel beendet
+		ist. \\ \hline
+				
+		Spielende \newline (regul\"ar) &
+		& Nach 48 erfolgten Z\"ugen ohne Gewinner $-$ Mensch und Computer $-$ endet das Spiel unentschieden, da alle Felder belegt sind und kein weiterer Zug mehr m\"oglich ist. In der Konsole wird angezeigt, dass das Spiel unentschieden endete. \\ \hline
+	\end{tabular}
+\end{center}
+
+
+\end{itemize}
+
+\end{exercise}
+
+%\begin{thebibliography}{99}
+%\bibitem{Test}
+%Hallo
+%\end{thebibliography}
+
+%\begin{center}
+%\includegraphics[width=6cm,angle=270]{chart.eps}
+%\end{center}
+
+\end{document}
