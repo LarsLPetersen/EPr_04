@@ -14,7 +14,7 @@ import csv
 def save_score(score, name):
     """..."""
 
-    file_name_csv = "highscores_hotel_management.csv"
+    file_name_csv = "highscores_hotelmanagement.csv"
 
     # csv-file already exists
     if os.path.isfile(file_name_csv):
@@ -90,20 +90,3 @@ def highscores_as_string(file_name_csv="highscores_hotel_management.csv"):
         pass
     
     return highscores 
-
-
-            
-if __name__ == "__main__":
-    save_score(603, "Lars")
-    save_score(604, "Lars")
-    save_score(604, "Lars")
-    save_score(605, "Peter")
-    save_score(54, "Farsi")
-    save_score(60, "Echo")
-    save_score(620, "Pu")
-    save_score(607, "Kick")
-    save_score(608, "Fett")
-    save_score(608, "Bol")
-    save_score(608, "Fol")
-    save_score(608, "Tol")
-    
