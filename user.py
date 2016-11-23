@@ -6,27 +6,51 @@ __credits__ = ""
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 
+import hotelmanagement
+import echo
+
+
 def help():
     """..."""
 
-    print("Die help()-Methode im Modul user wurde aufgerufen.")
-    pass
+    try:
+        user_input = input("\nSie haben folgende Optionen:\n" +
+                         "0  ->  Sie beenden das Spiel.\n" +
+                         "1  ->  Sie spielen eine neue Runde.\n" +
+                         "2  ->  Hilfe?\n" +
+                         "Bitte wählen Sie: ")
+        action_type = int(user_input)
+        assert (action_type in [0, 1, 2])
+        
+        if action_type == 0:
+            pass
+        elif action_type == 1:
+            hotelmanagement.main()
+        elif action_type == 2:
+            echo.help()
+        else:
+            pass
+        
+    except ValueError:
+        os.system("cls") if os.name =="nt" else os.system("clear")
+        print("\nIhre Eingabe hatte nicht das Format einer ganzen Zahl.\n"
+            "Bitte versuchen Sie es erneut.")
+    except AssertionError:
+        os.system("cls") if os.name =="nt" else os.system("clear")
+        print("\nIhre Eingabe war keine der angegebenen Optionen. \n"
+            "Bitte versuchen Sie es erneut.")
+    except KeyboardInterrupt:
+        pass
 
+    
 
 def quit():
     """..."""
+
     pass
 
 
 def new_game():
     """..."""
-    pass
 
-def status(distribution):
-    """..."""
-    distribution_string = ""
-    print("Die distribution()-Methode im Modul user wurde aufgerufen.")
-    for item in distribution.items():
-        distribution_string += item[0] + "  " + str(item[1]) + "\n"
-    print(distribution_string)
-    
+    pass
