@@ -6,10 +6,13 @@ __credits__ = ""
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 import random
+
 import scores
 import user    
 import echo
 import game
+
+
 
 def main():
     """Controlling the game flow"""
@@ -24,15 +27,17 @@ def main():
 
     score = 0
     distribution = {}
+
     
     #echo.network(network, towns)
-    echo.status(distribution)
+    #echo.status(distribution)
 
     echo.result(score)
     scores.save_score(score, "")
 
+    
     echo.goodbye()
-    user.help()
+    #user.help()
 
     
 
