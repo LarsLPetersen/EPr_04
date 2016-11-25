@@ -11,7 +11,7 @@ import echo
 
 
 def help():
-    """..."""
+    """
 
     try:
         user_input = input("\nSie haben folgende Optionen:\n" +
@@ -41,16 +41,27 @@ def help():
             "Bitte versuchen Sie es erneut.")
     except KeyboardInterrupt:
         pass
-
+    """
     
-
-def quit():
+def play_round(state, days_left):
     """..."""
 
+    for i in range(len(state)):
+        state[i][4] += 1 
+
+    echo.status(state)
+    return [state, 1]
+
+
+
+    
+def quit():
+    """...quit_value..."""
+    
     pass
 
 
 def new_game():
-    """..."""
+    """...new_game_value..."""
 
     pass

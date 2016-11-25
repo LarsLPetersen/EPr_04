@@ -23,7 +23,7 @@ def set_managers(towns):
 def set_timeframe():
     """returns d"""
 
-    return 20
+    return 5
     
 
 def set_potentials(towns):

@@ -1,4 +1,4 @@
-"""Module controlling the overall game flow"""
+"""Module controlling the overall game_test flow"""
 
 __author__ = "6360278: Qasim Raza, 6290157: Lars Petersen"
 __copyright__ = ""
@@ -10,7 +10,7 @@ import random
 import scores
 import user    
 import echo
-import game
+import game_test
 
 
 
@@ -19,17 +19,36 @@ def main():
 
     echo.welcome()
 
-    towns = game.set_towns()
-    managers = game.set_managers(towns)
-    timeframe = game.set_timeframe()
-    potentials = game.set_potentials(towns)
-    network = game.set_network(towns)
+    towns = game_test.set_towns()
 
-    score = 0
-    distribution = {}
+    (hometown, num_managers) = game_test.set_managers(towns)
+    managers = [0 for i in range(len(towns))]
+    managers[towns.index(hometown)] = num_managers
 
+    period = game_test.set_timeframe()
+    potentials = game_test.set_potentials(towns)
+    network = game_test.set_network(towns)
+
+    hotels = [0 for i in range(len(towns))]
     
-    #echo.network(network, towns)
+    score_of_today = [0 for i in range(len(towns))]
+    score = 0
+    
+    #global state
+    state = dict((i,[towns[i], managers[i], hotels[i], potentials[i], \
+                     score_of_today[i], network[i]]) for i in range(len(towns)))
+    print(state)
+
+    #global day
+    day = 1
+    
+    while day < period + 1:
+        [state, day_shift] = user.play_round(state, period - day)
+        score += sum([state[i][4] for i in range(len(state))])
+        day += day_shift
+        
+    
+    echo.network(network, towns)
     #echo.status(distribution)
 
     echo.result(score)

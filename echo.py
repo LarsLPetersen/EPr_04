@@ -22,10 +22,10 @@ def goodbye():
 def status(distribution):
     """Prints the status of the game after the last move"""
 
-    result = "\nStadt (Manager?, Hotel?, Potential, Gewinn)\n"
+    result = "\nStadt [# Manager, Hotel?, Potential, Gewinn]\n"
 
     for item in distribution.items():
-        output += item[0] + "  " + str(item[1]) + "\n"
+        result += str(item[1][0]) + " " + str(item[1][1:-1]) + "\n"
 
     print(result)
 
