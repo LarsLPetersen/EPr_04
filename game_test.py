@@ -37,3 +37,9 @@ def set_network(towns):
 
     return ((1, 1), (1, 1))
 
+def get_name():
+    """returns user naem"""
+    
+    name = input("Ihr Name: ")
+    return name
+

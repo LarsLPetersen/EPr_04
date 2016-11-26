@@ -5,18 +5,27 @@ __copyright__ = ""
 __credits__ = "" 
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
+import os
+#import constants
 
+
+def clear():
+    """Clear the screen"""
+    CLEAR = "cls" if os.name =="nt" else "clear"
+    os.system(CLEAR)
+    
+    
 def welcome():
     """Print welcome message"""
 
-    print("""Herzlich Willkommen zum Spiel 'Hotelmanagement'!""")
+    print("""Herzlich Willkommen zum Spiel 'Hotelmanagement'!\n""")
 
     
 def goodbye():
     """Prints goodbye message"""
 
-    print("Das Spiel ist nun beendet.")
-    print("Auf Wiedersehen!")
+    print("Das Spiel ist beendet.")
+    print("Auf Wiedersehen!\n")
 
     
 def status(distribution):
@@ -30,35 +39,31 @@ def status(distribution):
     print(result)
 
 
-def network(adjacency, towns):
+def infrastructure(state):
     """Prints the adjacency matrix of the network"""
 
+    rng_towns = range(len(state))
+    
     # determine the width of each column
-    width_columns = [0]
-
-    for town in towns:
-        width_columns.append(len(town))
-    width_columns[0] = max(width_columns)
+    width_columns = [len(state[i][0]) for i in rng_towns]
+    max_length_town = max(width_columns)
     
     # build the first row of the matrix
-    result = (width_columns[0] + 1) * " "
-    
-    for town in towns:
-        result += town + " "
+    result = (max_length_town + 1) * " "
+
+    for i in rng_towns:
+        result += state[i][0] + " "
     result += "\n"
     
-    # build the following rows
-    num1_town = 0
-    for row in adjacency:
-        result += towns[num1_town].ljust(width_columns[0]) + " "
-        num2_town = 1
-        for element in row:
-            result += " " * (width_columns[num2_town] // 2) + \
-                      str(element) + \
-                      " " * (width_columns[num2_town] - \
-                             width_columns[num2_town] // 2 - 1) + " "
-            num2_town += 1
-        num1_town += 1
+    # build the following rows, so that the entries of matrix
+    # appear approximately in the middle of each column
+    for town_index in rng_towns:
+        result += state[town_index][0].ljust(max_length_town) + " "
+        for adjacency_index in rng_towns:
+            w = width_columns[adjacency_index]
+            result += " " * (w // 2) + \
+                      str(state[town_index][5][adjacency_index]) + \
+                      " " * (w - w // 2 - 1) + " "
         result += "\n"
         
     print(result)

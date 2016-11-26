@@ -5,59 +5,89 @@ __copyright__ = ""
 __credits__ = "" 
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
-import random
-
+import time
+import os
 import scores
 import user    
 import echo
 import game_test
 
 
-
 def main():
     """Controlling the game flow"""
 
+    echo.clear()
     echo.welcome()
-
+    
     towns = game_test.set_towns()
-
+    num_towns = len(towns)
+    rng_towns = range(num_towns)
+    
     (hometown, num_managers) = game_test.set_managers(towns)
-    managers = [0 for i in range(len(towns))]
+    managers = [0 for town in rng_towns]
     managers[towns.index(hometown)] = num_managers
 
     period = game_test.set_timeframe()
     potentials = game_test.set_potentials(towns)
     network = game_test.set_network(towns)
 
-    hotels = [0 for i in range(len(towns))]
-    
-    score_of_today = [0 for i in range(len(towns))]
+    hotels = [0 for town in rng_towns]
+
+    score_of_today = [0 for town in rng_towns]
     score = 0
     
-    #global state
-    state = dict((i,[towns[i], managers[i], hotels[i], potentials[i], \
-                     score_of_today[i], network[i]]) for i in range(len(towns)))
-    print(state)
+    state = dict((town,[towns[town], managers[town], hotels[town], potentials[town], \
+                     score_of_today[town], network[town]]) for town in rng_towns)
+    towns = dict((town, towns.index(town)) for town in towns)
 
-    #global day
+    print("AUSGANGSSITUATION")
+    echo.status(state)
+
     day = 1
-    
+        
     while day < period + 1:
-        [state, day_shift] = user.play_round(state, period - day)
-        score += sum([state[i][4] for i in range(len(state))])
+        print("SPIELTAG " + str(day) + "\n")
+        days_left = period - day
+        [state, day_shift] = user.play_round(state, days_left, towns)
+
+        # special case: hire
+        if day_shift > 1:
+            for shift in range(day_shift):
+                profit_today = sum([state[town][4] for town in rng_towns])
+                if shift > 0:
+                    print("Automatische Berechnung ...\n")
+                    time.sleep(1)
+                print("SITUATION am Ende von Tag " + str(day + shift))
+                echo.status(state)
+                print("Gewinn an Tag " + str(day + shift) + ": " + str(profit_today))
+                score += profit_today
+                print("Gesamtgewinn mit Ende von Tag " + str(day + shift) + ": " + \
+                      str(score) + "\n")
+                shift += 1
+                for town in rng_towns:
+                    state[town][4] = 0
+                user.calculate_profit(state)
+
+        # every other case
+        else:
+            profit_today = sum([state[town][4] for town in rng_towns])
+
+            print("SITUATION am Ende von Tag " + str(day))
+            echo.status(state)
+
+            print("Gewinn an Tag " + str(day) + ": " + str(profit_today))
+            score += profit_today
+
+            print("Gesamtgewinn mit Ende von Tag " + str(day) + ": " + \
+                  str(score) + "\n")
+
         day += day_shift
         
-    
-    echo.network(network, towns)
-    #echo.status(distribution)
-
     echo.result(score)
-    scores.save_score(score, "")
+    name = game_test.get_name()
+    scores.save_score(score, name)
 
-    
     echo.goodbye()
-    #user.help()
-
     
 
 
@@ -71,7 +101,6 @@ if __name__ == "__main__":
             #print(scores.highscores_as_string())
             #echo.status(distribution)
             #user.help()
-            echo.network(adjacency, towns)
             user_input = input("Geben Sie etwas ein: ")
         except KeyboardInterrupt:
             user.help()
