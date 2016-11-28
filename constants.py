@@ -7,39 +7,25 @@ __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 import os
 
-def set():
-    """Setting global constants"""
+CLEAR = "cls" if os.name =="nt" else "clear"
+
+MIN_NUM_TOWNS = 5
+MAX_NUM_TOWNS = 20
+
+MIN_NUM_MANAGERS_HOME = 5
+MAX_NUM_MANAGERS_HOME = 20
+
+MIN_PERIOD = 5
+MAX_PERIOD = 40
+
+MIN_PROFIT = -20
+MAX_PROFIT = 90
+
+MAX_NUM_HOTELS = 1
+COSTS_HOTEL = -20
+
+DAYSHIFT_PASS = 1
+DAYSHIFT_BUILD = 1
+DAYSHIFT_MOVE = 1
+DAYSHIFT_HIRE = 3
     
-    global CLEAR 
-    CLEAR = "cls" if os.name =="nt" else "clear"
-
-    global MIN_NUM_TOWNS
-    MIN_NUM_TOWNS = 5
-
-    global MAX_NUM_TOWNS
-    MAX_NUM_TOWNS = 20
-
-    global MIN_NUM_MANAGERS_HOME
-    MIN_NUM_MANAGERS_HOME = 5
-
-    global MAX_NUM_MANAGERS_HOME
-    MAX_NUM_MANAGERS_HOME = 20
-
-    global MIN_PERIOD
-    MIN_PERIOD = 5
-
-    global MAX_PERIOD
-    MAX_PERIOD = 40
-
-    global MIN_PROFIT
-    MIN_PROFIT = -20
-
-    global MAX_PROFIT
-    MAX_PROFIT = 90
-
-    global COSTS_PASS
-    COSTS_PASS = -20
-
-    global DAYSHIFT_HIRE
-    DAYSHIFT_HIRE = 3
-        

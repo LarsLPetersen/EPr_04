@@ -18,18 +18,20 @@ def main():
 
     echo.clear()
     echo.welcome()
+
+    name = game_test.get_name()
     
-    towns = game_test.set_towns()
+    towns = game_test.get_towns()
     num_towns = len(towns)
     rng_towns = range(num_towns)
     
-    (hometown, num_managers) = game_test.set_managers(towns)
+    (hometown, num_managers) = game_test.get_managers(towns)
     managers = [0 for town in rng_towns]
     managers[towns.index(hometown)] = num_managers
 
-    period = game_test.set_timeframe()
-    potentials = game_test.set_potentials(towns)
-    network = game_test.set_network(towns)
+    period = game_test.get_timeframe()
+    potentials = game_test.get_potentials(towns)
+    network = game_test.get_network(towns)
 
     hotels = [0 for town in rng_towns]
 
@@ -50,7 +52,7 @@ def main():
         days_left = period - day
         [state, day_shift] = user.play_round(state, days_left, towns)
 
-        # special case: hire
+        # special case: hire -> day_shift > 1
         if day_shift > 1:
             for shift in range(day_shift):
                 profit_today = sum([state[town][4] for town in rng_towns])
@@ -84,7 +86,6 @@ def main():
         day += day_shift
         
     echo.result(score)
-    name = game_test.get_name()
     scores.save_score(score, name)
 
     echo.goodbye()

@@ -5,13 +5,12 @@ __copyright__ = ""
 __credits__ = "" 
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
+import os
+import sys
 
 import hotelmanagement
 import echo
-import os
-import sys
 import constants
-import re
 
 
 def help():
@@ -63,13 +62,13 @@ def play_round(state, days_left, towns):
     is_correct_move = False
 
     while not is_correct_move:
-        user_input = input("Ihr Spielzug: ")
+        user_input = input("Ihr Spielzug: \n>> ")
         
         # pass
         if user_input == "pass":
             state = evaluate_pass(state)
             is_correct_move = True
-            return [state, 1]
+            return [state, constants.DAYSHIFT_PASS]
 
         # build
         elif user_input[0:7] == "build: " and user_input[7:] in towns.keys():
@@ -83,13 +82,46 @@ def play_round(state, days_left, towns):
             else:
                 state = evaluate_build(state, towns[town])
                 is_correct_move = True
-                return [state, 1]
+                return [state, constants.DAYSHIFT_BUILD]
         
+        #move
+        elif user_input[0:6] == "move: ":
+            move_parameters = user_input[6:].split(sep=", ")
+            try:
+                num_managers = int(move_parameters[0])
+                if num_managers < 0:
+                    print("Anzahl der Manager muss >= 0 sein.")
+                    continue
+    
+                assert (move_parameters[1] in towns.keys() and \
+                       move_parameters[2] in towns.keys())
+
+                town1 = move_parameters[1]
+                if num_managers > state[towns[town1]][1]:
+                    print("Anzahl der Manager zu groß für " + town1 + ".\n")
+                    continue
+                
+                town2 = move_parameters[2]
+                state = evaluate_move(state, num_managers, \
+                                  towns[town1], towns[town2])
+                is_correct_move = True
+                return [state, constants.DAYSHIFT_MOVE]
+
+            except ValueError:
+                print("Ihre Angabe zur Anzahl der Manager ist nicht korrekt.")
+                continue
+            except AssertionError:
+                print("Ihre Angabe zu den Städten ist nicht korrekt.")
+                continue
+            except IndexError:
+                print("Nicht genügend Parameter angegeben.")
+                continue
+  
         #hire
         elif user_input[0:6] == "hire: " and user_input[6:] in towns.keys():           
             town = user_input[6:]
-            if days_left < 3:
-                print("Es sind nur noch " + str(days_left) + " Runden" + \
+            if days_left < constants.DAYSHIFT_HIRE + 1:
+                print("Es sind nur noch " + str(days_left) + " Runden " + \
                       "zu spielen.\n" +
                       "Dieser Zug benoetigt mehr Zeit.\n" + \
                       "Waehlen Sie einen anderen Zug.")
@@ -97,11 +129,11 @@ def play_round(state, days_left, towns):
 
             state = evaluate_hire(state, towns[town])
             is_correct_move = True
-            return [state, 3]
+            return [state, constants.DAYSHIFT_HIRE]
 
-
+        
         else:
-            print("Eingabe nicht gemaess den Vorgaben.")
+            print("Ihr Spielzug entspricht nicht einer der Vorgaben!")
             continue
     """
 
@@ -127,7 +159,7 @@ def calculate_profit(state):
             state[town][4] += state[town][3]
         # town has a hotel but no manager
         elif state[town][2] == 1 and state[town][1] == 0:
-            state[town][4] -= 20
+            state[town][4] += constants.COSTS_HOTEL
         # town has no hotel
         elif state[town][2] == 0:
             pass
@@ -145,14 +177,18 @@ def evaluate_pass(state):
 def evaluate_build(state, town):
     """..."""
 
-    state[town][2] = 1
+    state[town][2] += 1
     state = calculate_profit(state)
     return state
 
     
-def evaluate_move():
+def evaluate_move(state, num_managers, town1, town2):
     """..."""
-    pass
+
+    state[town1][1] -= num_managers
+    state[town2][1] += num_managers
+    state = calculate_profit(state)
+    return state
 
     
 def evaluate_hire(state, town):
@@ -160,10 +196,6 @@ def evaluate_hire(state, town):
 
     state[town][1] += 1
     state = calculate_profit(state)
-    """
-    state = evaluate_pass(state)
-    state = evaluate_pass(state)
-    """
     return state
                                   
 

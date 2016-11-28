@@ -6,13 +6,12 @@ __credits__ = ""
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 import os
-#import constants
+import constants
 
 
 def clear():
     """Clear the screen"""
-    CLEAR = "cls" if os.name =="nt" else "clear"
-    os.system(CLEAR)
+    os.system(constants.CLEAR)
     
     
 def welcome():
