@@ -42,29 +42,53 @@ def infrastructure(state):
     """Prints the adjacency matrix of the network"""
 
     rng_towns = range(len(state))
-    
-    # determine the width of each column
-    width_columns = [len(state[i][0]) for i in rng_towns]
-    max_length_town = max(width_columns)
-    
-    # build the first row of the matrix
-    result = (max_length_town + 1) * " "
+    result = ""
 
-    for i in rng_towns:
-        result += state[i][0] + " "
-    result += "\n"
-    
-    # build the following rows, so that the entries of matrix
-    # appear approximately in the middle of each column
-    for town_index in rng_towns:
-        result += state[town_index][0].ljust(max_length_town) + " "
-        for adjacency_index in rng_towns:
-            w = width_columns[adjacency_index]
-            result += " " * (w // 2) + \
-                      str(state[town_index][5][adjacency_index]) + \
-                      " " * (w - w // 2 - 1) + " "
+    # less than 10 cities to be displayed
+    if len(state) < 11:
+        # determine the width of each column
+        width_columns = [len(state[i][0]) for i in rng_towns]
+        max_length_town = max(width_columns)
+        
+        # build the first row of the matrix
+        result = (max_length_town + 1) * " "
+
+        for i in rng_towns:
+            result += state[i][0] + " "
         result += "\n"
         
+        # build the following rows, so that the entries of matrix
+        # appear approximately in the middle of each column
+        for town_index in rng_towns:
+            result += state[town_index][0].ljust(max_length_town) + " "
+            for adjacency_index in rng_towns:
+                w = width_columns[adjacency_index]
+                result += " " * (w // 2) + \
+                          str(state[town_index][5][adjacency_index]) + \
+                          " " * (w - w // 2 - 1) + " "
+            result += "\n"
+            
+    # more than 10 cities to be displayed        
+    else:
+        # determine the width of each column
+        width_first_column = max([len(state[i][0]) for i in rng_towns]) + 1
+        
+        # build the first row of the matrix
+        result = width_first_column * " "
+        for i in rng_towns:
+            result += " [" + str(i) + "] "
+        result += "\n"
+
+        # build the following rows, so that the entries of the matrix
+        # appear approximately in the middle of each column
+        for town_index in rng_towns:
+            result += state[town_index][0].ljust(width_first_column)
+            for adjacency_index in rng_towns:
+                result += "  " + \
+                          str(state[town_index][5][adjacency_index]) + \
+                          "  "
+            result += "\n"
+            
     print(result)
     
 

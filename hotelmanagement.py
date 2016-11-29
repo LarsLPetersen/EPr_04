@@ -7,6 +7,8 @@ __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 import time
 import os
+
+import constants
 import scores
 import user    
 import echo
@@ -42,12 +44,13 @@ def main():
                      score_of_today[town], network[town]]) for town in rng_towns)
     towns = dict((town, towns.index(town)) for town in towns)
 
-    print("AUSGANGSSITUATION")
+    print("AUSGANGSSTATUS")
     echo.status(state)
 
     day = 1
         
     while day < period + 1:
+        print(constants.INSTRUCTIONS)
         print("SPIELTAG " + str(day) + "\n")
         days_left = period - day
         [state, day_shift] = user.play_round(state, days_left, towns)
@@ -59,7 +62,7 @@ def main():
                 if shift > 0:
                     print("Automatische Berechnung ...\n")
                     time.sleep(1)
-                print("SITUATION am Ende von Tag " + str(day + shift))
+                print("STATUS am Ende von Tag " + str(day + shift))
                 echo.status(state)
                 print("Gewinn an Tag " + str(day + shift) + ": " + str(profit_today))
                 score += profit_today

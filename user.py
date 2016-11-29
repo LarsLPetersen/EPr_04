@@ -13,38 +13,20 @@ import echo
 import constants
 
 
-def help():
-    """
+def special_move(move_index):
+    """..."""
 
-    try:
-        user_input = input("\nSie haben folgende Optionen:\n" +
-                         "0  ->  Sie beenden das Spiel.\n" +
-                         "1  ->  Sie spielen eine neue Runde.\n" +
-                         "2  ->  Hilfe?\n" +
-                         "Bitte wählen Sie: ")
-        action_type = int(user_input)
-        assert (action_type in [0, 1, 2])
-        
-        if action_type == 0:
-            pass
-        elif action_type == 1:
-            hotelmanagement.main()
-        elif action_type == 2:
-            echo.help()
-        else:
-            pass
-        
-    except ValueError:
-        os.system("cls") if os.name =="nt" else os.system("clear")
-        print("\nIhre Eingabe hatte nicht das Format einer ganzen Zahl.\n"
-            "Bitte versuchen Sie es erneut.")
-    except AssertionError:
-        os.system("cls") if os.name =="nt" else os.system("clear")
-        print("\nIhre Eingabe war keine der angegebenen Optionen. \n"
-            "Bitte versuchen Sie es erneut.")
-    except KeyboardInterrupt:
+    # 
+    if move_index == 0:
+        sys.exit()
+    elif move_index == 1:
+        hotelmanagement.main()
+    elif move_index == 2:
+        print(constants.MOVES)
+    else:
         pass
-    """
+
+
     
 def play_round(state, days_left, towns):
     """..."""
@@ -64,6 +46,10 @@ def play_round(state, days_left, towns):
     while not is_correct_move:
         user_input = input("Ihr Spielzug: \n>> ")
         
+        # special move
+        if user_input in constants.SPECIAL_MOVES:
+            special_move(constants.SPECIAL_MOVES.index(user_input))
+            
         # pass
         if user_input == "pass":
             state = evaluate_pass(state)

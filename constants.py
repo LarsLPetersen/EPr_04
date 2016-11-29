@@ -29,3 +29,12 @@ DAYSHIFT_BUILD = 1
 DAYSHIFT_MOVE = 1
 DAYSHIFT_HIRE = 3
     
+INSTRUCTIONS = "Minianleitung:\n" + \
+               "'quit!'     -> Spielende\n" + \
+               "'new game!' -> Neue Runde\n" + \
+               "'help!'     -> Anzeige der Hilfe\n"
+
+SPECIAL_MOVES = ["quit!", "new game!", "help!"]
+
+MOVES = "Erlaubte Spielzüge:\n" + \
+        "'pass'        -> Nichts tun."
