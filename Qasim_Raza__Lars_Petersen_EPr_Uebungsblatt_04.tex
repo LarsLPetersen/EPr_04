@@ -41,7 +41,7 @@
 % Tutorin: sabrinasafre@gmail.com
 
 % Which assignment is this?
-\assignment{3}
+\assignment{4}
 
 % The environment "exercise" takes one parameter (the exercise number). 
 % This way you can skip exercises if you like. Example:
@@ -59,11 +59,9 @@
 
 
 
-\begin{exercise}{2}
+\begin{exercise}{x}
 
-\begin{itemize}
-
-\item[(a)] Dokumentation der Testf\"alle f\"ur das einfache Programm:
+Dokumentation der Testf\"alle:
 
 
 \begin{center}
@@ -74,88 +72,68 @@
 		Begr\"u\ss{}ung & 
 		& In der Konsole wird eine allgemeine Begr\"u\ss{}ung ausgegeben. \\ \hline
 		
-		Reihenfolge der Spielz\"uge & 
-		& Die Spieler sind abwechselnd an der Reihe. In der Konsole wird
-		angezeigt, welcher Spieler den n\"achsten Zug vornehmen soll.\\ \hline
+		Startwerte randomisiert & 
+		& \\ \hline
 		
-		Visualisierung Spielfeld & 
-		& Das Spielfeld wird nach jedem Zug in aktualisierter Form in der Konsole dargestellt. \\ \hline
+		Startwerte vom Spieler & 
+		& \dots \\ \hline
 		
-		Spaltenangabe des Spielers & Sonderzeichen \newline oder Buchstabenfolge 
-		& Eingabe wird abgefangen. Der Spieler wird darauf hingewiesen,
-		dass er keine ganze Zahl eingegeben hat.\\ \hline
+		Sonderzeichen &
+		& \dots \\ \hline
 		
-		Spaltenangabe des Spielers & \texttt{int}-Literal \newline $< 1$ oder $> 8$
-		& Eingabe wird abgefangen. Der Spieler wird darauf hingewiesen,
-		dass die angegebene Spalte nicht im vorgegebenen Bereich lag oder die Spalte bereits vollst\"andig belegt ist. \\ \hline
+		Anzeige des Stra\ss{}ennetzes &
+		& \dots \\ \hline
 		
-		Spaltenangabe des Spielers & Keyboard \newline Interrupt
-		& Eingabe wird abgefangen. Das Spiel wird beendet. Die Spieler erhalten in der Konsole den Hinweis, dass ein
-		Keyboard Interrupt erfolgt ist.\\ \hline
+		Anzeige des Spielstatus zu Beginn eines Spieltages &
+		& \dots \\ \hline
 		
-		Spielgewinn &
-		& Es wird NICHT gepr\"uft, ob ein Zug ein Gewinnzug ist oder nicht. \\ \hline
-		
-		Spielende \newline (regul\"ar) &
-		& Nach 48 erfolgten Z\"ugen endet das Spiel, da alle Felder belegt sind und kein weiterer Zug mehr m\"oglich ist.
-		Die Spieler erhalten in der Konsole den Hinweis, dass das Spiel beendet ist. \\ \hline
-		\end{tabular}
-\end{center}
+		Ablauf einer Spielrunde &
+		& \dots \\ \hline
 
-
-\item[(b)] Dokumentation der Testf\"alle f\"ur das erweiterte Programm. Die ersten sechs der in (a) genannten Testf\"alle sind auch hier anwendbar und deshalb nicht mehr zus\"atzlich aufgef\"uhrt.
-
-\begin{center}
-	\begin{tabular}{| p{2.5cm} | p{2.2cm} | p{10cm} |}
-		\hline
-		Funktionalit\"at & Eingabe & Verhalten des Programms\\ \hline \hline
+		Spielzug \texttt{pass} &
+		& \dots \\ \hline
 		
-		Spielgewinn &
-		& Nach jedem Zug eines Spielers wird gepr\"uft, ob eine der Gewinnkonfiguration erreicht wurde. Falls ja, wird das
-		Spiel beendet. Die Spieler erhalten in der Konsole den Hinweis, wer gewonnen hat und dass das Spiel beendet
-		ist. \\ \hline
+		Spielzug \texttt{move} &
+		& \dots \\ \hline
 		
-		Spielgewinn & [1]: 2, 3, 4, 4 \newline [2]: 1, 1, 1 &
-		Spieler 1 hat gewonnen. Das Spiel ist beendet. Beide Informationen erscheinen in der Konsole. \\ \hline
+		Spielzug \texttt{build} &
+		& \dots \\ \hline
 		
-		Spielgewinn & [1]: 1, 1, 1, 1 \newline [2]: 2, 3, 4, 4 &
-		Spieler 2 hat gewonnen. Das Spiel ist beendet. Beide Informationen erscheinen in der Konsole. \\ \hline
+		Spielzug \texttt{hire} &
+		& \dots \\ \hline
 		
-		Spielende \newline (regul\"ar) &
-		& Nach 48 erfolgten Z\"ugen ohne Gewinner endet das Spiel unentschieden, da alle Felder belegt sind und kein
-		weiterer Zug mehr m\"oglich ist. Die Spieler erhalten in der Konsole den Hinweis, dass das Spiel unentschieden
-		endete. \\ \hline
-	\end{tabular}
-\end{center}
+		Berechnung des Tagesgewinns &
+		& Am Ende eines Spieltages \dots \\ \hline
+		
+		Anzeige des Spielstatus am Ende eines Tages &
+		& Am Ende eines Tages \dots \\ \hline
+		
+		Aufruf der Hilfe &
+		& Jederzeit \dots \\ \hline
+	
+		Beginn eines neuen Spiels &
+		& Jederzeit \dots \\ \hline
+		
+		Spielabbruch auf Wunsch des Spielers &
+		& Jederzeit \dots \\ \hline
+		
+		Berechnung des Gesamtgewinns &
+		& Am Ende eines Spieltages \dots \\ \hline
+		
+		Pr\"ufung auf Highscore &
+		& Am Ende des Spiels \dots \\ \hline
 
-\newpage
-
-\item[(c)] Dokumentation der Testf\"alle f\"ur das Programm, dass auch den Computer als Gegner nutzen kann.
-Die ersten sechs der in (a) genannten Testf\"alle sind auch hier anwendbar und deshalb nicht mehr zus\"atzlich aufgef\"uhrt. Zudem sind die Testf\"alle aus (b) ebenfalls \"ubertragbar, so dass der Zwei-Spieler-Modus abgedeckt ist und nicht mehr gesondert aufgef\"uhrt wird.
-
-\begin{center}
-	\begin{tabular}{| p{2.5cm} | p{2.2cm} | p{10cm} |}
-		\hline
-		Funktionalit\"at & Eingabe & Verhalten des Programms\\ \hline \hline
-		
-		Wahl des \newline Spielmodus & $0$ oder $1$
-		& Bei $0$ wird der Zwei\--Spieler\--Modus gew\"ahlt. Bei $1$ das Spiel gegen den Computer. Der Modus wird dem Nutzer anf\"anglich angezeigt. \\ \hline
-		
-		Wahl der Spielreihenfolge im Spiel gegen den Com\-puter & $0$ oder $1$
-		& Bei $0$ wird der Zwei-Spieler-Modus gew\"ahlt. Bei $1$ das Spiel gegen den Computer.\\ \hline
-
-		Spielgewinn &
-		& Nach jedem Zug $-$ Spieler oder Computer $-$ wird gepr\"uft, ob eine der Gewinnkonfiguration erreicht wurde. Falls ja, wird das
-		Spiel beendet. In der Konsole wird angezeigt, wer gewonnen hat und dass das Spiel beendet
-		ist. \\ \hline
+		Darstellung der Highscores &
+		& Am Ende des Spiels \dots\\ \hline
 				
-		Spielende \newline (regul\"ar) &
-		& Nach 48 erfolgten Z\"ugen ohne Gewinner $-$ Mensch und Computer $-$ endet das Spiel unentschieden, da alle Felder belegt sind und kein weiterer Zug mehr m\"oglich ist. In der Konsole wird angezeigt, dass das Spiel unentschieden endete. \\ \hline
+		Abspeichern der Highscore-Liste &
+		& Am Ende des Spiels \dots \\ \hline
+		
+		Regul\"ares Spielende &
+		& Am Ende des Spiels \dots \\ \hline
+		
 	\end{tabular}
 \end{center}
-
-
-\end{itemize}
 
 \end{exercise}
 
