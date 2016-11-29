@@ -1,32 +1,34 @@
-"""Module controlling the overall game flow"""
+"""Comprises the various print statements for the game 'Hotelmanagement'"""
 
 __author__ = "6360278: Qasim Raza, 6290157: Lars Petersen"
 __copyright__ = ""
 __credits__ = "" 
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
+
+# built-in modules
 import os
+
+# game specific modules
 import constants
 
 
 def clear():
     """Clear the screen"""
     os.system(constants.CLEAR)
-    
-    
-def welcome():
-    """Print welcome message"""
-
-    print("""Herzlich Willkommen zum Spiel 'Hotelmanagement'!\n""")
 
     
-def goodbye():
-    """Prints goodbye message"""
-
-    print("Das Spiel ist beendet.")
-    print("Auf Wiedersehen!\n")
-
+def headline(day):
+    """Prints header in console for each day, containing mini instructions"""
     
+    print(constants.INSTRUCTIONS)
+    
+    main_line = 3 * "#" + 5 * " " + "SPIELTAG " + str(day) + 5 * " " + 3 * "#"
+    print(len(main_line) * "#")
+    print(main_line)
+    print(len(main_line) * "#")
+    
+
 def status(distribution):
     """Prints the status of the game after the last move"""
 
@@ -89,16 +91,23 @@ def infrastructure(state):
                           "  "
             result += "\n"
             
+    print("Das Straßennetz:")
+    print("----------------")
     print(result)
+
+
+def scores(highscores):
+    """Prints the current highscores of the game to the console"""
     
-
-def result(score):
-    """Prints the final result"""
-
-    print("Ihr Gesamtgewinn beträgt: " + str(score))
-
-
-def help():
-    """Prints the possible options for a move"""
-
-    print("Erlaubte Aktionen sind:")
+    table = ""
+    magnitude = len(str(highscores[0][0]))
+    
+    for i in range(len(highscores)):
+        table += str(i + 1) + "." + min(2, 3 - len(str(i + 1))) * " " + \
+                str(highscores[i][0]).rjust(magnitude) + \
+                " " + highscores[i][1] + "\n"
+                    
+    print("\nHighscores:")
+    
+    print(table) 
+ 

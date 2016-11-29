@@ -6,6 +6,7 @@ __credits__ = ""
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 
+
 def get_towns():
     """returns n-tuple, elements pairewise different strings of length > 0"""
 
@@ -40,5 +41,6 @@ def get_name():
     """returns user naem"""
     
     name = input("Ihr Name: ")
+    
     return name
 
