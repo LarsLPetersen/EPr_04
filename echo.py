@@ -91,8 +91,7 @@ def infrastructure(state):
                           "  "
             result += "\n"
             
-    print("Das Straßennetz:")
-    print("----------------")
+    print("Das Straßennetz:\n")
     print(result)
 
 
@@ -108,6 +107,15 @@ def scores(highscores):
                 " " + highscores[i][1] + "\n"
                     
     print("\nHighscores:")
-    
     print(table) 
- 
+
+
+def choice():
+    """Prints the possible choices for initialising the values to the console"""
+    
+    text = "\nOptionen:\n" + \
+           "0 -> Werte werden zufällig erzeugt.\n" + \
+           "1 -> Sie geben die Werte manuell ein.\n"
+    
+    print(text)
+           

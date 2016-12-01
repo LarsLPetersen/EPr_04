@@ -32,10 +32,21 @@ DAYSHIFT_PASS = 1
 DAYSHIFT_BUILD = 1
 DAYSHIFT_MOVE = 1
 DAYSHIFT_HIRE = 3
-    
+
+GAME_PARAMETERS = ["Städte initialisieren", "Anzahl der Manager und deren " + \
+                    "Heimatstadt festlegen", \
+                    "Spieldauer festlegen", "Gewinn je Stadt festlegen", \
+                    "Straßennetzwerk festlegen"]
+                     
 SPECIAL_MOVES = ["quit!", "new game!", "help!", "status!"]
+SPECIAL_INPUT = ["quit!", "new game!", "help!"]
 
-
+INPUT_INSTRUCTIONS = "------------------------------------\n" + \
+                     "| 'quit!'     -> Spielende         |\n" + \
+                     "| 'new game!' -> Neue Runde        |\n" + \
+                     "| 'help!'     -> Anzeige Hilfe     |\n" + \
+                     "------------------------------------\n"
+                     
 INSTRUCTIONS = "------------------------------------\n" + \
                "| 'quit!'     -> Spielende         |\n" + \
                "| 'new game!' -> Neue Runde        |\n" + \

@@ -30,24 +30,29 @@ def main():
     num_towns = len(towns)
     rng_towns = range(num_towns)
     
-    (hometown, num_managers) = game_test.get_managers(towns)
     managers = [0 for town in rng_towns]
+    (hometown, num_managers) = game_test.get_managers(towns)
+    
     managers[towns.index(hometown)] = num_managers
-
-    period = game_test.get_timeframe()
+    
+    period = game_test.get_time_frame()
     potentials = game_test.get_potentials(towns)
     network = game_test.get_network(towns)
 
     hotels = [0 for town in rng_towns]
-
+    
     score_of_today = [0 for town in rng_towns]
     score = 0
+    
+    # mapping cities to integers (inverse of towns)
+    cities = dict((town, towns.index(town)) for town in towns)
+    # mapping integers to towns (inverse of cities)
+    towns = dict((towns.index(town), town) for town in towns)
     
     state = dict((town,[towns[town], managers[town], hotels[town], \
                 potentials[town], score_of_today[town], network[town]]) \
                 for town in rng_towns)
-    towns = dict((town, towns.index(town)) for town in towns)
-
+    
     day = 1
     echo.clear()
             
@@ -59,7 +64,8 @@ def main():
         echo.status(state)
         
         days_left = period - day
-        [state, day_shift, city] = user.play_round(state, days_left, towns)
+        [state, day_shift, city] = user.play_round(state, days_left, \
+                                                    towns, cities)
 
         # special case: hire -> day_shift > 1
         if day_shift > 1:
