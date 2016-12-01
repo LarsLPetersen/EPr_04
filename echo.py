@@ -32,10 +32,23 @@ def headline(day):
 def status(distribution):
     """Prints the status of the game after the last move"""
 
-    result = "\nStadt [# Manager, Hotel?, Potential, Gewinn]\n"
-
+    #result = "\nStadt [# Manager, Hotel?, Potential, Gewinn]\n"
+    #for item in distribution.items():
+    #    result += str(item[1][0]) + " " + str(item[1][1:-1]) + "\n"
+    
+    result = ""
+    width_column1 = max([len(distribution[i][0]) for i in range(len(distribution))])
+    
+    # build the first row
+    result += "\n" + "Stadt".ljust(width_column1) + " " + \
+                "[# Manager  Hotel?  Potential  Gewinn]\n"
+    
     for item in distribution.items():
-        result += str(item[1][0]) + " " + str(item[1][1:-1]) + "\n"
+        result += str(item[1][0]).ljust(width_column1) + " " + \
+                  "[" + str(item[1][1]).rjust(9) + \
+                  str(item[1][2]).rjust(8) + \
+                  str(item[1][3]).rjust(11) + \
+                  str(item[1][4]).rjust(8) + "]\n"
 
     print(result)
 
@@ -78,7 +91,7 @@ def infrastructure(state):
         # build the first row of the matrix
         result = width_first_column * " "
         for i in rng_towns:
-            result += " [" + str(i) + "] "
+            result += " [" + str(i + 1) + "] "
         result += "\n"
 
         # build the following rows, so that the entries of the matrix
@@ -86,12 +99,17 @@ def infrastructure(state):
         for town_index in rng_towns:
             result += state[town_index][0].ljust(width_first_column)
             for adjacency_index in rng_towns:
-                result += "  " + \
-                          str(state[town_index][5][adjacency_index]) + \
-                          "  "
+                if adjacency_index < 8:
+                    result += "  " + \
+                              str(state[town_index][5][adjacency_index]) + \
+                              "  "
+                else:
+                    result += "  " + \
+                              str(state[town_index][5][adjacency_index]) + \
+                              "   "   
             result += "\n"
             
-    print("Das Straßennetz:\n")
+    print("\nDas Straßennetz:\n")
     print(result)
 
 

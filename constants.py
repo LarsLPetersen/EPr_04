@@ -55,25 +55,23 @@ INSTRUCTIONS = "------------------------------------\n" + \
                "------------------------------------\n"
 
 MOVES = "\nSpielzüge:\n" + \
-        "----------\n" + \
-        "1. 'pass<ENTER>'\n" + \
+        "1. 'pass'<ENTER>\n" + \
         "    -> Nichts tun.\n" + \
-        "2. 'build: city<ENTER>'\n" + \
+        "2. 'build: city'<ENTER>\n" + \
         "    -> Bauen Sie ein Hotel in city.\n" + \
-        "3. 'move: number, city1, city2<ENTER>'\n" + \
+        "3. 'move: number, city1, city2'<ENTER>\n" + \
         "    -> Bewegen Sie number Manager aus city1 in city2.\n" + \
-        "4. 'hire: city<ENTER>'\n" + \
+        "4. 'hire: city'<ENTER>\n" + \
         "    -> Stellen Sie einen Manager in city ein.\n\n" + \
         "ACHTUNG:\n" + \
         "Sie müssen sich exakt an die Syntax halten.\n" + \
         "Es werden außerdem Konsistenzprüfungen durchgeführt.\n\n" + \
         "Weitere Optionen:\n" + \
-        "-----------------\n" + \
-        "a) 'quit!<ENTER>'     -> Spielende\n" + \
-        "b) 'new game!<ENTER>' -> Neue Runde\n" + \
-        "c) 'status!'<ENTER>'  -> Status anzeigen\n" + \
-        "d) 'help!<ENTER>'     -> Aufruf dieser Hilfe\n\n" + \
-        "Durch <ENTER> können Sie zwischendurch weiterschalten.\n"
+        "a) 'quit!'<ENTER>     -> Spielende\n" + \
+        "b) 'new game!'<ENTER> -> Neue Runde\n" + \
+        "c) 'status!'<ENTER>   -> Status anzeigen\n" + \
+        "d) 'help!'<ENTER>     -> Aufruf dieser Hilfe\n\n" + \
+        "Durch <ENTER> können Sie auch zwischendurch weiterschalten.\n"
 
 NEW_HIGHSCORE_MESSAGE = "Glückwunsch!\n" + \
                         "Ihr Spiel wird in die Highscore-Liste aufgenommen."

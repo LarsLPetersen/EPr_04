@@ -50,7 +50,7 @@ def choose_towns():
         print("\nNamensliste der Städte angeben\n\n" + \
               "Geben Sie eine [Leerzeichen + Komma]-separierte Liste von\n" + \
               "mindestens 5 und maximal 20 verschiedenen Namen an, z.B.\n" + \
-              "Stadt1, Stadt2, Stadt3, ..., Stadt 16\n")
+              "Stadt1, Stadt2, Stadt3, ..., Stadt16\n")
         user_input = input("Ihre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
@@ -105,7 +105,7 @@ def get_managers(towns):
         hometown = towns[choose_hometown(towns) - 1]
         num_managers = choose_num_managers()
         print("\nIhre gewählte Heimatstadt und Anzahl Manager:")
-        print((towns[hometown_index], num_managers)) 
+        print((hometown, num_managers)) 
         input()
         echo.clear()
         return (hometown, num_managers)
