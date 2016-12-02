@@ -23,6 +23,7 @@ def main():
 
     echo.clear()
     print(constants.WELCOME_MESSAGE)
+    print(constants.INPUT_INSTRUCTIONS)
     
     name = game_test.get_name()
     
@@ -60,7 +61,8 @@ def main():
         
         echo.headline(day)
         
-        print("\nStatus am Beginn von Tag " + str(day) + ":")
+        print("\nStatus am Beginn von Tag (" + str(day) + \
+              "/" + str(period) + "):")
         echo.status(state)
         
         days_left = period - day
@@ -96,7 +98,8 @@ def main():
         else:
             profit_today = sum([state[town][4] for town in rng_towns])
 
-            print("\nStatus am Ende von Tag " + str(day) + ":")
+            print("\nStatus am Ende von Tag (" + str(day) + \
+              "/" + str(period) + "):")
             echo.status(state)
 
             print("Gewinn an Tag " + str(day) + ": " + str(profit_today))

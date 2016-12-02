@@ -27,7 +27,7 @@ def special_input(input_index):
         hotelmanagement.main()
     # help!
     elif input_index == 2:
-        print(constants.INPUT)    
+        print(constants.INPUT_INSTRUCTIONS)    
     
     else:
         pass

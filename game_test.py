@@ -20,17 +20,20 @@ def get_towns():
     
     if choice == 0:
         num_towns = random.randint(5, 20)
-        towns = tuple([("Stadt" + str(i)) for i in range(1, num_towns + 1)])
-        print("\nZufällig erzeugte Stödte:")
-        print(towns)
+        towns = tuple(random.sample(constants.LIST_OF_TOWNS, num_towns))
+        #towns = tuple([("Stadt" + str(i)) for i in range(1, num_towns + 1)])
+        print("\nZufällig erzeugte Stödte:\n")
+        for town in towns:
+            print(town)
         input()
         echo.clear()
         return towns
         
     elif choice == 1:
         towns = choose_towns()
-        print("\nIhre eingegebenen Stödte:")
-        print(towns)
+        print("\nIhre eingegebenen Stödte:\n")
+        for town in towns:
+            print(town)
         input()
         echo.clear()
         return towns
@@ -95,8 +98,9 @@ def get_managers(towns):
     if choice == 0:
         num_managers = random.randint(5, 20)
         hometown_index = random.randint(0,len(towns)-1)
-        print("\nZufällig gewählte Heimatstadt und Anzahl Manager:")
-        print((towns[hometown_index], num_managers)) 
+        print("\nZufällig gewählte Heimatstadt und Anzahl Manager:\n")
+        print("Heimatstadt: " + towns[hometown_index])
+        print("Anzahl Manager: " + str(num_managers)) 
         input()
         echo.clear()
         return (towns[hometown_index], num_managers)
@@ -204,14 +208,14 @@ def get_time_frame():
     
     if choice == 0:
         time_frame = random.randint(5, 40)
-        print("\nZufällig gewählte Spieldauer: " + str(time_frame) + " Tage")
+        print("\nZufällig Spieldauer: " + str(time_frame) + " Tage")
         input()
         echo.clear()
         return time_frame
         
     elif choice == 1:
         time_frame = choose_time_frame()
-        print("\nIhre gewählte Spieldauer: " + str(time_frame) + " Tage")
+        print("\nGewählte Spieldauer: " + str(time_frame) + " Tage")
         input()
         echo.clear()
         return time_frame
@@ -265,20 +269,24 @@ def get_potentials(towns):
     choice = choose(3)
     
     if choice == 0:
-        potentials = [random.randint(-20, 90) for i in range(len(towns))]
-        print("\nZufällig gewählte potentielle Gewinne:")
-        print(potentials)
+        potentials = tuple([random.randint(-20, 90) for i in range(len(towns))])
+        print("\nZufällig gewählte potentielle Gewinne:\n")
+        for i in range(len(towns)):
+            print(towns[i].ljust(16) + str(potentials[i]).rjust(3))
         input()
         echo.clear()
-        return tuple(potentials)
+        return potentials
         
     elif choice == 1:
-        potentials = choose_potentials(towns)
-        print("\nIhre gewählten potentiellen Gewinne:")
-        print(potentials)
+        potentials = tuple(choose_potentials(towns))
+        print("\nIhre gewählten potentiellen Gewinne:\n")
+        max_length_town_name = max([len(town) for town in towns])
+        for i in range(len(towns)):
+            print(towns[i].ljust(max_length_town_name + 1) + \
+                  str(potentials[i]).rjust(3))
         input()
         echo.clear()
-        return tuple(potentials)
+        return potentials
         
     else:
         pass
@@ -355,16 +363,20 @@ def get_network(towns):
                 j += 1
             i += 1
         
-        print("\nZufällig gewähltes Straßennetz:")
-        print(tuple(network))
+        network = tuple(network)
+        print("\nZufällig gewähltes Straßennetz:\n")
+        for i in range(len(towns)):
+            print(towns[i].ljust(16) + str(network[i]))    
         input()
         echo.clear()
-        return tuple(network)
+        return network
         
     elif choice == 1:
         network = choose_network(towns)
-        print("\nIhr gewähltes Straßennetz:")
-        print(network)
+        print("\nIhr gewähltes Straßennetz:\n")
+        max_length_town_name = max([len(town) for town in towns])
+        for i in range(len(towns)):
+            print(towns[i].ljust(max_length_town_name + 1) + str(network[i]))
         input()
         echo.clear()
         return network
@@ -428,9 +440,11 @@ def choose_network(towns):
 
 
 def get_name():
-    """returns user naem"""
+    """Returns name of the player - used later on for highscore list"""
     
-    name = input("Ihr Name: ")
+    print("Bitte geben Sie Ihren Namen für die Aufnahme in\n" + \
+          "die Highscore-Liste an:")
+    name = input(">> ")
     
     return name
 

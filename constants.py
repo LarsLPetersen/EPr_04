@@ -15,7 +15,14 @@ CLEAR = "cls" if os.name =="nt" else "clear"
 
 MIN_NUM_TOWNS = 5
 MAX_NUM_TOWNS = 20
-
+LIST_OF_TOWNS = ["Berlin", "Hamburg", "München", "Köln", "Frankfurt", \
+                 "Stuttgart", "Düsseldorf", "Dortmund", "Essen", "Leipzig", \
+                 "Bremen", "Dresden", "Hannover", "Nürnberg", "Duisburg", \
+                 "Bochum", "Wuppertal", "Bielefeld", "Bonn", "Münster", \
+                 "Kiel", "Lübeck", "Karlsruhe", "Darmstadt", "Kassel", \
+                 "Würzburg", "Aachen", "Wolfsburg", "Hildesheim", "Gießen", \
+                 "Saarbrücken", "Kaiserslautern", "Mainz", "Wiesbaden"]
+                 
 MIN_NUM_MANAGERS_HOME = 5
 MAX_NUM_MANAGERS_HOME = 20
 
