@@ -24,10 +24,8 @@ def headline(day):
     
     print(constants.MAIN_INSTRUCTIONS)
     
-    main_line = 3 * "#" + 5 * " " + "SPIELTAG " + str(day) + 5 * " " + 3 * "#"
-    print(len(main_line) * "#")
+    main_line = "SPIELTAG " + str(day)
     print(main_line)
-    print(len(main_line) * "#")
     
 
 def status(distribution):
@@ -127,11 +125,8 @@ def scores(highscores):
 
 
 def choice():
-    """Prints the possible choices for initialising the values to the console"""
+    """Prints possible choices (user vs random) for initialising the values"""
     
-    text = "\nOptionen:\n" + \
-           "0 -> Werte werden zufällig erzeugt.\n" + \
-           "1 -> Sie geben die Werte manuell ein.\n"
     
-    print(text)
+    print(constants.CHOICE_MESSAGE)
            

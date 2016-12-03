@@ -10,18 +10,17 @@ __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 import echo
 import constants
 import random
-import user
+import game
 
 
 def get_towns():
-    """Returns an n-tuple of pairwise different towns (strings of length > 0)"""
+    """Returns tuple of pairwise different towns (user or random output)"""
     
     choice = choose(0)
     
     if choice == 0:
         num_towns = random.randint(5, 20)
         towns = tuple(random.sample(constants.LIST_OF_TOWNS, num_towns))
-        #towns = tuple([("Stadt" + str(i)) for i in range(1, num_towns + 1)])
         echo.clear()
         print("\n\nZufällig gewählt...\n")
         for town in towns:
@@ -47,11 +46,12 @@ def get_towns():
     
 
 def choose_towns():
-    """Lets the user choose its own towns"""
+    """Lets the user choose its own towns for the game"""
     
     is_correct_input = False
     
     while not is_correct_input:
+        print()
         print(constants.INIT_INSTRUCTIONS)
         print("\nNamensliste der Städte angeben\n\n" + \
               "Geben Sie eine [Leerzeichen + Komma]-separierte Liste von\n" + \
@@ -60,7 +60,7 @@ def choose_towns():
         user_input = input("Ihre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear()
             continue
@@ -94,7 +94,7 @@ def choose_towns():
 
 
 def get_managers(towns):
-    """Returns a 2-tuple (hometown, m) where m = # managers"""
+    """Returns tuple (hometown, number of managers) - user or random output"""
     
     choice = choose(1)
     
@@ -137,7 +137,7 @@ def choose_num_managers(hometown):
         user_input = input("Ihre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear()
             continue
@@ -145,7 +145,7 @@ def choose_num_managers(hometown):
             try:
                 num_managers = int(user_input)
                 assert (num_managers <= 20 and num_managers >= 5)
-                echo.c
+                echo.clear()
                 is_correct_input = True
                 return num_managers
             
@@ -183,7 +183,7 @@ def choose_hometown(towns):
         user_input = input("Ihre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear
             continue
@@ -211,7 +211,7 @@ def choose_hometown(towns):
                         
             
 def get_timeframe():
-    """Returns the number of days to be played"""
+    """Returns the number of days to be played (user or random output)"""
 
     choice = choose(2)
     
@@ -234,18 +234,19 @@ def get_timeframe():
 
         
 def choose_timeframe():
-    """Lets the user choose the timeframe of the game (number of days"""
+    """Lets the user choose the timeframe of the game (number of days)"""
     
     is_correct_input = False
     
     while not is_correct_input:
         echo.clear()
+        print()
         print(constants.INIT_INSTRUCTIONS)
         print("\nAnzahl der Spieltage (Min: 5, Max: 40) festlegen\n")
         user_input = input("Ihre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear()
             continue
@@ -273,7 +274,7 @@ def choose_timeframe():
 
 
 def get_potentials(towns):
-    """Returns tuple containing potential wins to be be made in each town"""
+    """Returns tpotential wins for each town (user or randomto output)"""
     
     choice = choose(3)
     
@@ -293,7 +294,7 @@ def get_potentials(towns):
         
     elif choice == 1:
         potentials = tuple(choose_potentials(towns))
-        print("\nIhre Eingaben...\n")
+        print("\n\nIhre Eingaben...\n")
         max_length_town_name = max([len(town) for town in towns])
         for i in range(len(towns)):
             print(("[" + str(i + 1) + "]").rjust(4) + " " + \
@@ -327,7 +328,7 @@ def choose_potentials(towns):
         user_input = input("\nIhre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear()
             continue
@@ -364,7 +365,7 @@ def choose_potentials(towns):
 
 
 def get_network(towns):
-    """Returns a tuple representing the network of streets between the towns"""
+    """Returns adjacency tuple for the towns (user or random output)"""
     
     choice = choose(4)
     
@@ -444,7 +445,7 @@ def choose_network(towns):
         
         # user performs special input (quit!, help!, new game!)
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear()
             continue
@@ -520,7 +521,7 @@ def choose(index):
         user_input = input("Ihre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear()
             continue

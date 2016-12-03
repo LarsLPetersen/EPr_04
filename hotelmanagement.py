@@ -1,4 +1,4 @@
-"""Controls the overall flow"""
+"""Controls the overall flow of the game"""
 
 __author__ = "6360278: Qasim Raza, 6290157: Lars Petersen"
 __copyright__ = ""
@@ -13,17 +13,16 @@ import csv
 
 # game specific modules
 import constants
-import user    
+import game   
 import echo
 import init
 
 
-def save_score(score):
+def save_score(score, name):
     """Saves highscores to csv-file highscores_hotelmanagement
 
     Maximum number of entries in file is 10."""
     
-    name = get_name()
     file_name_csv = "highscores_hotelmanagement.csv"
     highscores = []
     
@@ -99,9 +98,9 @@ def get_name():
     
         # user performs special input (quit!, help!, new game!)
         if user_input in constants.SPECIAL_INPUT:
-            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            game.special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
-            echo.clear
+            echo.clear()
             continue
     
         # input is interpreted as a name
@@ -117,17 +116,24 @@ def main():
     echo.clear()
     print(constants.WELCOME_MESSAGE)
     
+    # getting towns
     towns = init.get_towns()
     num_towns = len(towns)
     rng_towns = range(num_towns)
     
+    # getting hometown and number of managers in hometown
     managers = [0 for town in rng_towns]
     (hometown, num_managers) = init.get_managers(towns)
     
     managers[towns.index(hometown)] = num_managers
     
+    # getting the number of days to be played
     period = init.get_timeframe()
+    
+    # getting possible wins for each city
     potentials = init.get_potentials(towns)
+    
+    # getting the network (adjacency)
     network = init.get_network(towns)
 
     hotels = [0 for town in rng_towns]
@@ -137,6 +143,7 @@ def main():
     
     # mapping cities to integers (inverse of towns)
     cities = dict((town, towns.index(town)) for town in towns)
+    
     # mapping integers to towns (inverse of cities)
     towns = dict((towns.index(town), town) for town in towns)
     
@@ -146,7 +153,8 @@ def main():
     
     day = 1
     echo.clear()
-            
+    
+    # main loop over the number of days to be played        
     while day < period + 1:
         
         echo.headline(day)
@@ -156,7 +164,7 @@ def main():
         echo.status(state)
         
         days_left = period - day
-        [state, day_shift, city] = user.play_round(state, days_left, \
+        [state, day_shift, city] = game.play_round(state, days_left, \
                                                     towns, cities)
 
         # special case: hire -> day_shift > 1
@@ -167,20 +175,22 @@ def main():
                     print("Automatische Berechnung ...\n")
                     time.sleep(.5)
                 # new manager is active with the beginning of day d + 2
-                # where d is the day he was hired
+                # where d is the day he was hired (in the morning)
                 if shift == 2:
                     state[city][1] += 1
                 print("\nStatus am Ende von Tag " + str(day + shift))
                 echo.status(state)
                 print("Gewinn an Tag " + str(day + shift) + ": " + \
                         str(profit_today))
+                # adding the profit of the current day to the overall score
                 score += profit_today
                 print("Gesamtgewinn mit Ende von Tag " + str(day + shift) + \
                         ": " + str(score) + "\n")
                 shift += 1
+                # resetting the score of the day
                 for town in rng_towns:
                     state[town][4] = 0
-                user.calculate_profit(state)
+                game.calculate_profit(state)
                 input()
                 echo.clear()
 
@@ -206,7 +216,8 @@ def main():
     print("Spielende!\n")
     print("Gesamtgewinn im Spiel: " + str(score) + "\n")    
     
-    scores.save_score(score, name)
+    name = get_name()
+    save_score(score, name)
 
     print(constants.GOODBYE_MESSAGE)
 

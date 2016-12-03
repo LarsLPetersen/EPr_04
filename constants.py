@@ -49,6 +49,10 @@ GAME_PARAMETERS = ["Städte initialisieren", "Anzahl der Manager und deren " + \
 SPECIAL_MOVES = ["quit!", "new game!", "help!", "status!"]
 SPECIAL_INPUT = ["quit!", "new game!", "help!"]
 
+CHOICE_MESSAGE = "\nOptionen:\n" + \
+                 "0 -> Werte werden zufällig erzeugt.\n" + \
+                 "1 -> Sie geben die Werte manuell ein.\n"
+                 
 INIT_INSTRUCTIONS = "\n------------ Kurzinfo -----------\n" + \
                     "| 'quit!'     -> Spielende      |\n" + \
                     "| 'new game!' -> Neue Runde     |\n" + \
@@ -95,13 +99,13 @@ MOVES = "\nSpielzüge:\n" + \
         "Es werden außerdem Konsistenzprüfungen durchgeführt.\n\n" + \
         "Durch <ENTER> können Sie auch zwischendurch weiterschalten.\n"
 
-NEW_HIGHSCORE_MESSAGE = "Glückwunsch!\n" + \
+NEW_HIGHSCORE_MESSAGE = "\nGlückwunsch!\n" + \
                         "Ihr Spiel wird in die Highscore-Liste aufgenommen."
 
-NO_HIGHSCORE_MESSAGE = "Leider erhalten Sie für dieses Spiel keinen " + \
+NO_HIGHSCORE_MESSAGE = "\nLeider erhalten Sie für dieses Spiel keinen " + \
                        "Eintrag in die Highscore-Liste."
 
-REPEATING_HIGHSCORE_MESSAGE = "Es existiert bereits ein identischer " + \
+REPEATING_HIGHSCORE_MESSAGE = "\nEs existiert bereits ein identischer " + \
                               "in der Highscore-Liste."
 
 WELCOME_MESSAGE = "\nWillkommen zum Spiel 'Hotelmanagement'!\n"
