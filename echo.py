@@ -22,8 +22,6 @@ def clear():
 def headline(day):
     """Prints header in console for each day, containing mini instructions"""
     
-    print(constants.MAIN_INSTRUCTIONS)
-    
     main_line = "SPIELTAG " + str(day)
     print(main_line)
     
@@ -32,7 +30,8 @@ def status(distribution):
     """Prints the status of the game after the last move"""
 
     result = ""
-    width_column1 = max([len(distribution[i][0]) for i in range(len(distribution))])
+    width_column1 = max([len(distribution[i][0]) for i in \
+                                                    range(len(distribution))])
     
     # build the first row
     result += "\n" + "Stadt".ljust(width_column1) + " " + \

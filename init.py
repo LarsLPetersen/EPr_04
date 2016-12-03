@@ -6,11 +6,37 @@ __credits__ = ""
 __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 
+# built-in modules
+import sys
+import time
+
 # game specific modules
 import echo
 import constants
 import random
 import game
+import hotelmanagement
+
+
+def special_input(input_index):
+    """Controls user actions during initialization of game parameters"""
+
+    # quit!
+    if input_index == 0:
+        print("\nAbbruch...\n")
+        sys.exit()
+    # new game!
+    elif input_index == 1:
+        echo.clear()
+        print("\n\nNeues Spiel...")
+        time.sleep(1.5)
+        hotelmanagement.main()
+    # help!
+    elif input_index == 2:
+        print(constants.INPUTS)
+    
+    else:
+        pass
 
 
 def get_towns():
@@ -52,21 +78,22 @@ def choose_towns():
     
     while not is_correct_input:
         print()
-        print(constants.INIT_INSTRUCTIONS)
+        print(constants.INSTRUCTIONS)
         print("\nNamensliste der Städte angeben\n\n" + \
               "Geben Sie eine [Leerzeichen + Komma]-separierte Liste von\n" + \
               "mindestens 5 und maximal 20 verschiedenen Namen an, z.B.\n" + \
               "'Stadt1, Stadt2, Stadt3, ..., Stadt16'\n")
-        user_input = input("Ihre Wahl:\n>> ")
-    
-        if user_input in constants.SPECIAL_INPUT:
-            game.special_input(constants.SPECIAL_INPUT.index(user_input))
-            input()
-            echo.clear()
-            continue
         
-        else:
-            try:
+        try:
+            user_input = input("Ihre Wahl:\n>> ")
+    
+            if user_input in constants.SPECIAL_INPUT:
+                special_input(constants.SPECIAL_INPUT.index(user_input))
+                input()
+                echo.clear()
+                continue
+        
+            else:
                 towns = user_input.split(sep = ", ")
                 if (len(towns) != len(set(towns))):
                     print("\nStädte müssen verschieden benannt sein!")
@@ -85,12 +112,17 @@ def choose_towns():
                 is_correct_input = True
                 return tuple(towns)
             
-            except ValueError:
-                print("\nEingabe nicht gemäß Vorgabe!")
-                print("Neuer Versuch ...\n")
-                input()
-                echo.clear()
-                continue
+        except ValueError:
+            print("\nEingabe nicht gemäß Vorgabe!")
+            print("Neuer Versuch ...\n")
+            input()
+            echo.clear()
+            continue
+        
+        except KeyboardInterrupt:
+            print("\nKeyboardInterrupt!")
+            print("Abbruch...\n")
+            sys.exit()
 
 
 def get_managers(towns):
@@ -131,37 +163,42 @@ def choose_num_managers(hometown):
     
     while not is_correct_input:
         echo.clear()
-        print(constants.INIT_INSTRUCTIONS)
+        print(constants.INSTRUCTIONS)
         print("\nAnzahl der Manager (Min: 5, Max: 20) in Ihrer Heimatstadt" + \
               " " + hometown + " festlegen\n")
-        user_input = input("Ihre Wahl:\n>> ")
+        try:
+            user_input = input("Ihre Wahl:\n>> ")
     
-        if user_input in constants.SPECIAL_INPUT:
-            game.special_input(constants.SPECIAL_INPUT.index(user_input))
-            input()
-            echo.clear()
-            continue
-        else:
-            try:
+            if user_input in constants.SPECIAL_INPUT:
+                special_input(constants.SPECIAL_INPUT.index(user_input))
+                input()
+                echo.clear()
+                continue
+            else:
                 num_managers = int(user_input)
                 assert (num_managers <= 20 and num_managers >= 5)
                 echo.clear()
                 is_correct_input = True
                 return num_managers
             
-            except ValueError:
-                print("\nEingabe nicht gemäß Vorgabe!")
-                print("Neuer Versuch ...\n")
-                input()
-                echo.clear()
-                continue
+        except ValueError:
+            print("\nEingabe nicht gemäß Vorgabe!")
+            print("Neuer Versuch ...\n")
+            input()
+            echo.clear()
+            continue
 
-            except AssertionError:
-                print("\nEingabe nicht gemäß Vorgabe!")
-                print("Neuer Versuch ...\n")
-                input()
-                echo.clear()
-                continue
+        except AssertionError:
+            print("\nEingabe nicht gemäß Vorgabe!")
+            print("Neuer Versuch ...\n")
+            input()
+            echo.clear()
+            continue
+
+        except KeyboardInterrupt:
+            print("\nKeyboardInterrupt!")
+            print("Abbruch...\n")
+            sys.exit()
 
 
 def choose_hometown(towns):
@@ -171,7 +208,7 @@ def choose_hometown(towns):
     
     while not is_correct_input:
         print()
-        print(constants.INIT_INSTRUCTIONS)
+        print(constants.INSTRUCTIONS)
         print("\nHeimatstadt der Manager festlegen\n\n" + \
               "Geben Sie dazu den Index der festzulegenden Heimatstadt an.\n")
         print("Liste der Städte:")
@@ -180,34 +217,40 @@ def choose_hometown(towns):
                   town)
         print()
         
-        user_input = input("Ihre Wahl:\n>> ")
+        try:
+            user_input = input("Ihre Wahl:\n>> ")
     
-        if user_input in constants.SPECIAL_INPUT:
-            game.special_input(constants.SPECIAL_INPUT.index(user_input))
-            input()
-            echo.clear
-            continue
-        else:
-            try:
+            if user_input in constants.SPECIAL_INPUT:
+                special_input(constants.SPECIAL_INPUT.index(user_input))
+                input()
+                echo.clear
+                continue
+            
+            else:
                 hometown_index = int(user_input) - 1
                 assert (hometown_index < len(towns) and hometown_index >= 0)
                 echo.clear()
                 is_correct_input = True
                 return hometown_index
             
-            except ValueError:
-                print("\nEingabe nicht gemäß Vorgabe!")
-                print("Neuer Versuch ...\n")
-                input()
-                echo.clear()
-                continue
+        except ValueError:
+            print("\nEingabe nicht gemäß Vorgabe!")
+            print("Neuer Versuch ...\n")
+            input()
+            echo.clear()
+            continue
 
-            except AssertionError:
-                print("\nEingabe nicht gemäß Vorgabe!")
-                print("Neuer Versuch ...\n")
-                input()
-                echo.clear()
-                continue
+        except AssertionError:
+            print("\nEingabe nicht gemäß Vorgabe!")
+            print("Neuer Versuch ...\n")
+            input()
+            echo.clear()
+            continue
+            
+        except KeyboardInterrupt:
+            print("\nKeyboardInterrupt!")
+            print("Abbruch...\n")
+            sys.exit()
                         
             
 def get_timeframe():
@@ -241,12 +284,12 @@ def choose_timeframe():
     while not is_correct_input:
         echo.clear()
         print()
-        print(constants.INIT_INSTRUCTIONS)
+        print(constants.INSTRUCTIONS)
         print("\nAnzahl der Spieltage (Min: 5, Max: 40) festlegen\n")
         user_input = input("Ihre Wahl:\n>> ")
     
         if user_input in constants.SPECIAL_INPUT:
-            game.special_input(constants.SPECIAL_INPUT.index(user_input))
+            special_input(constants.SPECIAL_INPUT.index(user_input))
             input()
             echo.clear()
             continue
@@ -277,7 +320,7 @@ def get_potentials(towns):
     """Returns tpotential wins for each town (user or randomto output)"""
     
     choice = choose(3)
-    
+    # generate random potentials
     if choice == 0:
         echo.clear()
         potentials = tuple([random.randint(-20, 90) for i in \
@@ -291,7 +334,7 @@ def get_potentials(towns):
         input()
         echo.clear()
         return potentials
-        
+    # user defined potentials    
     elif choice == 1:
         potentials = tuple(choose_potentials(towns))
         print("\n\nIhre Eingaben...\n")
@@ -315,7 +358,7 @@ def choose_potentials(towns):
     
     while not is_correct_input:
         echo.clear()
-        print(constants.INIT_INSTRUCTIONS)
+        print(constants.INSTRUCTIONS)
         print("\nPotentiellen Gewinn je Stadt angeben\n\n" + \
               "Geben Sie eine [Leerzeichen + Komma]-separierte Liste von\n" + \
               str(len(towns)) + " ganzen Zahlen (Min: -20, Max: 90) an, " + \
@@ -325,16 +368,16 @@ def choose_potentials(towns):
             print(("[" + str(towns.index(town) + 1) + "]").rjust(4) + " " + \
                     town)
         
-        user_input = input("\nIhre Wahl:\n>> ")
+        try:
+            user_input = input("\nIhre Wahl:\n>> ")
     
-        if user_input in constants.SPECIAL_INPUT:
-            game.special_input(constants.SPECIAL_INPUT.index(user_input))
-            input()
-            echo.clear()
-            continue
+            if user_input in constants.SPECIAL_INPUT:
+                special_input(constants.SPECIAL_INPUT.index(user_input))
+                input()
+                echo.clear()
+                continue
         
-        else:
-            try:
+            else:
                 potentials = user_input.split(sep = ", ")
                 if (len(potentials) != len(towns)):
                     print("\nEingabe hat nicht richtige Anzahl an Werten!")
@@ -356,13 +399,18 @@ def choose_potentials(towns):
                 is_correct_input = True
                 return tuple(potentials)
             
-            except ValueError:
-                print("\nEingabe nicht gemäß Vorgabe!")
-                print("Neuer Versuch ...\n")
-                input()
-                echo.clear()
-                continue
+        except ValueError:
+            print("\nEingabe nicht gemäß Vorgabe!")
+            print("Neuer Versuch ...\n")
+            input()
+            echo.clear()
+            continue
 
+        except KeyboardInterrupt:
+            print("\nKeyboardInterrupt!")
+            print("Abbruch...\n")
+            sys.exit()
+            
 
 def get_network(towns):
     """Returns adjacency tuple for the towns (user or random output)"""
@@ -431,7 +479,7 @@ def choose_network(towns):
     while not is_correct_input:
         echo.clear()
         print()
-        print(constants.INIT_INSTRUCTIONS)
+        print(constants.INSTRUCTIONS)
         echo.infrastructure(pre_state)
         print("Geben Sie exakt '<Zeile>, <Spalte>' des zu ändernden " + \
               "Eintrags an.\n" + "Der Wert wird dann 'invertiert'.\n" + \
@@ -440,27 +488,26 @@ def choose_network(towns):
               "Eine Eingabe mit <Zeile> == <Spalte> wird nicht akzeptiert.\n"
               "Beenden Sie Ihre Modifikationen mit 'end!'.\n")
               
+        try:
+            user_input = input("Ihre Wahl:\n>> ")
         
-        user_input = input("Ihre Wahl:\n>> ")
+            # user performs special input (quit!, help!, new game!)
+            if user_input in constants.SPECIAL_INPUT:
+                special_input(constants.SPECIAL_INPUT.index(user_input))
+                input()
+                echo.clear()
+                continue
         
-        # user performs special input (quit!, help!, new game!)
-        if user_input in constants.SPECIAL_INPUT:
-            game.special_input(constants.SPECIAL_INPUT.index(user_input))
-            input()
-            echo.clear()
-            continue
+            # user terminates modifications
+            elif user_input == "end!":
+                print("\nÄnderungen abgeschlossen...\n")
+                input()
+                echo.clear()
+                is_correct_input = True
+                return tuple(network)
         
-        # user terminates modifications
-        elif user_input == "end!":
-            print("\nÄnderungen abgeschlossen...\n")
-            input()
-            echo.clear()
-            is_correct_input = True
-            return tuple(network)
-        
-        # user enters coordinates for the entry to be changed
-        else:
-            try:
+            # user enters coordinates for the entry to be changed
+            else:
                 index = user_input.split(sep = ", ")
                 
                 # check whether two 'coordinate-like' like literals are passed
@@ -499,12 +546,17 @@ def choose_network(towns):
                     echo.clear()
                     continue
                        
-            except ValueError:
-                print("\nEingabe nicht gemäß Vorgabe!")
-                print("Neuer Versuch ...\n")
-                input()
-                echo.clear()
-                continue        
+        except ValueError:
+            print("\nEingabe nicht gemäß Vorgabe!")
+            print("Neuer Versuch ...\n")
+            input()
+            echo.clear()
+            continue        
+        
+        except KeyboardInterrupt:
+            print("\nKeyboardInterrupt!")
+            print("Abbruch...\n")
+            sys.exit()
 
 
 def choose(index):
@@ -515,23 +567,30 @@ def choose(index):
     
     while not is_correct_input:
         
-        print(constants.INIT_INSTRUCTIONS)
+        print(constants.INSTRUCTIONS)
         print(constants.GAME_PARAMETERS[index])
         echo.choice()
-        user_input = input("Ihre Wahl:\n>> ")
-    
-        if user_input in constants.SPECIAL_INPUT:
-            game.special_input(constants.SPECIAL_INPUT.index(user_input))
-            input()
-            echo.clear()
-            continue
-        elif user_input == "0":
-            return 0
-        elif user_input == "1":
-            return 1
-        else:
-            print("\nEingabe nicht gemäß Vorgabe!")
-            print("Neuer Versuch ...\n")
-            input()
-            echo.clear()
-            continue
+        
+        try:
+            user_input = input("Ihre Wahl:\n>> ")
+
+            if user_input in constants.SPECIAL_INPUT:
+                special_input(constants.SPECIAL_INPUT.index(user_input))
+                input()
+                echo.clear()
+                continue
+            elif user_input == "0":
+                return 0
+            elif user_input == "1":
+                return 1
+            else:
+                print("\nEingabe nicht gemäß Vorgabe!")
+                print("Neuer Versuch ...\n")
+                input()
+                echo.clear()
+                continue
+                
+        except KeyboardInterrupt:
+                print("\nKeyboardInterrupt!")
+                print("Abbruch...\n")
+                sys.exit()

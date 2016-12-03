@@ -147,37 +147,34 @@ def main():
     # mapping integers to towns (inverse of cities)
     towns = dict((towns.index(town), town) for town in towns)
     
+    # state represents the most important data structure of the whole program
+    # it contains the essential attributes of the game
     state = dict((town,[towns[town], managers[town], hotels[town], \
                 potentials[town], score_of_today[town], network[town]]) \
                 for town in rng_towns)
     
+    
     day = 1
-    echo.clear()
     
     # main loop over the number of days to be played        
     while day < period + 1:
-        
+        echo.clear()    
         echo.headline(day)
         
-        print("\nStatus am Beginn von Tag (" + str(day) + \
-              "/" + str(period) + "):")
-        echo.status(state)
-        
         days_left = period - day
-        [state, day_shift, city] = game.play_round(state, days_left, \
+        [state, day_shift, city] = game.play_round(state, period, days_left, \
                                                     towns, cities)
 
         # special case: hire -> day_shift > 1
         if day_shift > 1:
+            # new manager is active with the beginning of day d + 2
+            # where d is the day he was hired (in the morning)
             for shift in range(day_shift):
+                # state enters as state at the end of day + shift
                 profit_today = sum([state[town][4] for town in rng_towns])
                 if shift > 0:
                     print("Automatische Berechnung ...\n")
                     time.sleep(.5)
-                # new manager is active with the beginning of day d + 2
-                # where d is the day he was hired (in the morning)
-                if shift == 2:
-                    state[city][1] += 1
                 print("\nStatus am Ende von Tag " + str(day + shift))
                 echo.status(state)
                 print("Gewinn an Tag " + str(day + shift) + ": " + \
@@ -187,13 +184,25 @@ def main():
                 score += profit_today
                 print("Gesamtgewinn mit Ende von Tag " + str(day + shift) + \
                         ": " + str(score) + "\n")
-                shift += 1
                 
                 # resetting the score of the day
                 for town in rng_towns:
                     state[town][4] = 0
                 
-                game.calculate_profit(state)
+                # we want the manager to be effective with beginning of
+                # day + (shift = 2)
+                if shift == 1:
+                    state[city][1] += 1
+                
+                # turning state into evening mode
+                state = game.calculate_profit(state)
+                shift += 1
+                
+                # special case: resetting state to morning mode at the end
+                # of the final iteration
+                if shift == day_shift:
+                    for town in rng_towns:
+                        state[town][4] = 0
                 
                 input()
                 echo.clear()
@@ -202,8 +211,8 @@ def main():
         else:
             profit_today = sum([state[town][4] for town in rng_towns])
 
-            print("\nStatus am Ende von Tag (" + str(day) + \
-              "/" + str(period) + "):")
+            print("\nStatus am Ende von Tag " + str(day) + \
+              " (" + str(period) + "):")
             echo.status(state)
 
             print("Gewinn an Tag " + str(day) + ": " + str(profit_today))

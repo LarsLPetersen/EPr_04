@@ -9,6 +9,7 @@ __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 # built-in modules
 import os
 import sys
+import time
 
 # game specific modules
 import hotelmanagement
@@ -16,55 +17,32 @@ import echo
 import constants
 
 
-def special_input(input_index):
-    """Controls user actions during initialization of game parameters"""
-
-    # quit!
-    if input_index == 0:
-        sys.exit()
-    # new game!
-    elif input_index == 1:
-        hotelmanagement.main()
-    # help!
-    elif input_index == 2:
-        print(constants.INPUTS)    
-    
-    else:
-        pass
-
-
 def special_move(move_index, state, days_left):
     """Controls user actions not concerning real game moves"""
 
     # quit!
     if move_index == 0:
+        print("\nAbbruch...\n")
         sys.exit()
     # new game!
     elif move_index == 1:
+        echo.clear()
+        print("\nNeues Spiel...")
+        time.sleep(1)
         hotelmanagement.main()
     # help!
     elif move_index == 2:
         print(constants.MOVES)
-    # status!
-    elif move_index == 3:
-        print()
-        echo.infrastructure(state)
-        print("Aktueller Status:")
-        echo.status(state)
-        print("Verbleibende Tage: " + str(days_left + 1))
-        
+    
     else:
         pass
 
     
-def play_round(state, days_left, towns, cities):
-    """Controls user actions concerning game moves"""
+def play_round(state, period, days_left, towns, cities):
+    """Controls main user actions concerning game moves"""
 
     rng_towns = range(len(state))
     
-    # print the network to help the user plan the next move
-    echo.infrastructure(state)
-
     # set profit at beginning of day to 0
     for town in rng_towns:
         state[town][4] = 0
@@ -72,6 +50,14 @@ def play_round(state, days_left, towns, cities):
     is_correct_move = False
 
     while not is_correct_move:
+        print(constants.INSTRUCTIONS)
+        # print network, status and number of remaining days help the user plan
+        # the next move
+        echo.infrastructure(state)
+        echo.status(state)
+        print("Verbleibende Tage: " + str(days_left + 1) + \
+            " (" + str(period) + ")\n")
+        
         user_input = input("Ihr Spielzug: \n>> ")
         
         # special move
@@ -79,12 +65,14 @@ def play_round(state, days_left, towns, cities):
             special_move(constants.SPECIAL_MOVES.index(user_input), state, \
                         days_left)
             input()
+            echo.clear()
             continue
             
         # pass
         if user_input == "pass":
             state = evaluate_pass(state)
             is_correct_move = True
+            echo.clear()
             return [state, constants.DAYSHIFT_PASS, None]
 
         # build
@@ -95,11 +83,14 @@ def play_round(state, days_left, towns, cities):
                       "Sie können dort kein weiteres errichten.\n" + \
                       "Wählen Sie einen anderen Zug.")
                 print("Neuer Versuch...\n")
+                input()
+                echo.clear()
                 continue
 
             else:
                 state = evaluate_build(state, cities[city])
                 is_correct_move = True
+                echo.clear()
                 return [state, constants.DAYSHIFT_BUILD, None]
         
         # move
@@ -108,8 +99,10 @@ def play_round(state, days_left, towns, cities):
             try:
                 num_managers = int(move_parameters[0])
                 if num_managers < 1:
-                    print("\nAnzahl der Manager muss >= 0 sein.")
+                    print("\nAnzahl der Manager muss nicht negativ sein.")
                     print("Neuer Versuch...\n")
+                    input()
+                    echo.clear()
                     continue
     
                 assert (move_parameters[1] in cities.keys() and \
@@ -119,6 +112,8 @@ def play_round(state, days_left, towns, cities):
                 if num_managers > state[cities[city1]][1]:
                     print("\nAnzahl der Manager zu groß für " + city1 + ".")
                     print("Neuer Versuch...\n")
+                    input()
+                    echo.clear()
                     continue
                 
                 city2 = move_parameters[2]
@@ -127,28 +122,39 @@ def play_round(state, days_left, towns, cities):
                     print("\nKeine Verbindung zwischen " + city1 + " und " + \
                             city2 + ".")
                     print("Neuer Versuch...\n")
+                    input()
+                    echo.clear()
                     continue
                     
                 state = evaluate_move(state, num_managers, \
                                   cities[city1], cities[city2])
                 is_correct_move = True
+                echo.clear()
                 return [state, constants.DAYSHIFT_MOVE, None]
 
             except ValueError:
                 print("\nIhre Angabe zur Anzahl der Manager ist nicht " + \
                         "korrekt.\n")
                 print("Neuer Versuch...\n")
+                input()
+                echo.clear()
                 continue
+            
             except AssertionError:
                 print("\nIhre Angabe zu den Städten ist nicht korrekt.\n")
                 print("Neuer Versuch...\n")
+                input()
+                echo.clear()
                 continue
+            
             except IndexError:
                 print("\nNicht genügend Parameter angegeben.\n")
                 print("Neuer Versuch...\n")
+                input()
+                echo.clear()
                 continue
   
-        #h ire
+        # hire
         elif user_input[0:6] == "hire: " and user_input[6:] in cities.keys():           
             city = user_input[6:]
             if days_left < constants.DAYSHIFT_HIRE - 1:
@@ -156,16 +162,20 @@ def play_round(state, days_left, towns, cities):
                       "zu spielen.\n" +
                       "Dieser Zug benötigt mehr Zeit.\n" + \
                       "Wählen Sie einen anderen Zug.\n")
+                input()
+                echo.clear()
                 continue
 
-            state = evaluate_hire(state, cities[city])
+            state = calculate_profit(state)
             is_correct_move = True
+            echo.clear()
             return [state, constants.DAYSHIFT_HIRE, cities[city]]
-
-        
+   
         else:
             print("\nSpielzug nicht gemäß Vorgaben!")
             print("Neuer Versuch...\n")
+            input()
+            echo.clear()
             continue
 
 
@@ -189,7 +199,7 @@ def calculate_profit(state):
 
     
 def evaluate_pass(state):
-    """Updates game state by doing nothing"""
+    """Updates game state by doing nothing execpt for profit calculations"""
 
     state = calculate_profit(state)
     return state
@@ -210,12 +220,3 @@ def evaluate_move(state, num_managers, city1, city2):
     state[city2][1] += num_managers
     state = calculate_profit(state)
     return state
-
-    
-def evaluate_hire(state, city):
-    """Updates game state by raising the num of managers in town by one"""
-
-    #state[city][1] += 1
-    state = calculate_profit(state)
-    return state
-                                  

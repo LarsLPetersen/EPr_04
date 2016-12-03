@@ -53,19 +53,12 @@ CHOICE_MESSAGE = "\nOptionen:\n" + \
                  "0 -> Werte werden zufällig erzeugt.\n" + \
                  "1 -> Sie geben die Werte manuell ein.\n"
                  
-INIT_INSTRUCTIONS = "\n------------ Kurzinfo -----------\n" + \
-                    "| 'quit!'     -> Spielende      |\n" + \
-                    "| 'new game!' -> Neue Runde     |\n" + \
-                    "| 'help!'     -> Anzeige Hilfe  |\n" + \
-                    "---------------------------------\n"
+INSTRUCTIONS = "\n------------ Kurzinfo -----------\n" + \
+               "| 'quit!'     -> Spielende      |\n" + \
+               "| 'new game!' -> Neue Runde     |\n" + \
+               "| 'help!'     -> Anzeige Hilfe  |\n" + \
+               "---------------------------------\n"
                      
-MAIN_INSTRUCTIONS = "\n---------Kurzinfo-------------------\n" + \
-                    "| 'quit!'     -> Spielende         |\n" + \
-                    "| 'new game!' -> Neue Runde        |\n" + \
-                    "| 'status!'   -> Anzeige Status    |\n" + \
-                    "| 'help!'     -> Anzeige Hilfe     |\n" + \
-                    "------------------------------------\n"
-
 INPUTS = "\nEingaben:\n" + \
          "Sie sind gerade in der Initialisierungsphase des Spiels.\n" + \
          "Hier werden Sie zur manuellen Eingabe der Spielparameter " + \
@@ -92,8 +85,7 @@ MOVES = "\nSpielzüge:\n" + \
         "Weitere Optionen:\n" + \
         "a) 'quit!'<ENTER>     -> Spielende\n" + \
         "b) 'new game!'<ENTER> -> Neue Runde\n" + \
-        "c) 'status!'<ENTER>   -> Status anzeigen\n" + \
-        "d) 'help!'<ENTER>     -> Aufruf dieser Hilfe\n\n" + \
+        "c) 'help!'<ENTER>     -> Aufruf dieser Hilfe\n\n" + \
         "ACHTUNG:\n" + \
         "Sie müssen sich exakt an die Syntax halten.\n" + \
         "Es werden außerdem Konsistenzprüfungen durchgeführt.\n\n" + \
