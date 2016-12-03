@@ -102,7 +102,7 @@ def play_round(state, days_left, towns, cities):
                 is_correct_move = True
                 return [state, constants.DAYSHIFT_BUILD, None]
         
-        #move
+        # move
         elif user_input[0:6] == "move: ":
             move_parameters = user_input[6:].split(sep=", ")
             try:
@@ -148,7 +148,7 @@ def play_round(state, days_left, towns, cities):
                 print("Neuer Versuch...\n")
                 continue
   
-        #hire
+        #h ire
         elif user_input[0:6] == "hire: " and user_input[6:] in cities.keys():           
             city = user_input[6:]
             if days_left < constants.DAYSHIFT_HIRE - 1:

@@ -182,15 +182,19 @@ def main():
                 echo.status(state)
                 print("Gewinn an Tag " + str(day + shift) + ": " + \
                         str(profit_today))
+                
                 # adding the profit of the current day to the overall score
                 score += profit_today
                 print("Gesamtgewinn mit Ende von Tag " + str(day + shift) + \
                         ": " + str(score) + "\n")
                 shift += 1
+                
                 # resetting the score of the day
                 for town in rng_towns:
                     state[town][4] = 0
+                
                 game.calculate_profit(state)
+                
                 input()
                 echo.clear()
 
@@ -207,6 +211,10 @@ def main():
 
             print("Gesamtgewinn mit Ende von Tag " + str(day) + ": " + \
                   str(score) + "\n")
+            
+            # setting the score of the day to 0 for beginning of next day
+            for town in rng_towns:
+                state[town][4] = 0
             
             input()
             echo.clear()
