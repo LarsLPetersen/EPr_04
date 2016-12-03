@@ -1,5 +1,4 @@
-"""..."""
-
+"""Saves highscores to csv-file highscores_hotelmanagement"""
 
 __author__ = "6360278: Qasim Raza, 6290157: Lars Petersen"
 __copyright__ = ""

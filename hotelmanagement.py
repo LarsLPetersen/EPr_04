@@ -1,4 +1,4 @@
-"""Controls the overall game_test flow"""
+"""Controls the overall flow"""
 
 __author__ = "6360278: Qasim Raza, 6290157: Lars Petersen"
 __copyright__ = ""
@@ -9,13 +9,106 @@ __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 # built-in modules
 import time
 import os
+import csv
 
 # game specific modules
 import constants
-import scores
 import user    
 import echo
-import game_test
+import init
+
+
+def save_score(score):
+    """Saves highscores to csv-file highscores_hotelmanagement
+
+    Maximum number of entries in file is 10."""
+    
+    name = get_name()
+    file_name_csv = "highscores_hotelmanagement.csv"
+    highscores = []
+    
+    # csv-file already exists - reading scores into a list for later comparison
+    if os.path.isfile(file_name_csv):
+        with open(file_name_csv, newline = '') as csvfile:
+            score_reader = csv.reader(csvfile, delimiter = " ")
+            for row in score_reader:
+                if row[0] == "Punkte":
+                    continue
+                highscores.append([int(row[0]), row[1]])
+
+        # less than 10 scores up to now; [score, name] not already in list
+        if len(highscores) < 10 and [score, name] not in highscores:
+            highscores.append([score, name])
+            highscores.sort(reverse=True)
+            with open(file_name_csv, "w") as csvfile:
+                score_writer = csv.writer(csvfile, delimiter = " ")
+                score_writer.writerow(["Punkte"] + ["Name"])
+                for entry in highscores:
+                        score_writer.writerow([entry[0]] + [entry[1]])
+            print(constants.NEW_HIGHSCORE_MESSAGE)
+                
+        # less than 10 scores up to now; [score, name] already in list
+        elif len(highscores) < 10 and [score, name] in highscores:
+            print(constants.NEW_HIGHSCORE_MESSAGE)
+
+        # 10 or more scores up to now; [score, name] already in list
+        elif len(highscores) >= 10 and [score, name] in highscores:
+            print(constants.REPEATING_HIGHSCORE_MESSAGE)
+
+        # 10 or more scores up to now: [score, name] not in list
+        else:
+            current_min = min(highscores)
+            index_min = highscores.index(current_min)
+            # score is greater than minimum in list
+            if score > current_min[0]:
+                highscores[index_min] = [score, name]
+                highscores.sort(reverse=True)
+                with open(file_name_csv, "w") as csvfile:
+                    score_writer = csv.writer(csvfile, delimiter = " ")
+                    score_writer.writerow(["Punkte"] + ["Name"])
+                    for entry in highscores:
+                        score_writer.writerow([entry[0]] + [entry[1]])
+                print(constants.NEW_HIGHSCORE_MESSAGE)
+            # score is equal or less than minimum in list
+            else:
+                print(constants.NO_HIGHSCORE_MESSAGE)
+
+    # csv-file has to be created with a first entry
+    else:
+        highscores.append([score, name])
+        with open(file_name_csv, "w") as csvfile:
+            score_writer = csv.writer(csvfile, delimiter = " ")
+            score_writer.writerow(["Punkte"] + ["Name"])
+            score_writer.writerow([score] + [name])
+        print(constants.NEW_HIGHSCORE_MESSAGE)
+    
+    echo.scores(highscores)
+
+
+def get_name():
+    """Returns name of the player - used later on for the highscore list"""
+    
+    is_real_name = False
+
+    while not is_real_name:
+    
+        print("Bitte geben Sie Ihren Namen für die Aufnahme in\n" + \
+              "die Highscore-Liste an:")
+        user_input = input(">> ")
+   
+    
+        # user performs special input (quit!, help!, new game!)
+        if user_input in constants.SPECIAL_INPUT:
+            user.special_input(constants.SPECIAL_INPUT.index(user_input))
+            input()
+            echo.clear
+            continue
+    
+        # input is interpreted as a name
+        else:
+            name = user_input
+            is_real_name = True
+            return name
 
 
 def main():
@@ -23,22 +116,19 @@ def main():
 
     echo.clear()
     print(constants.WELCOME_MESSAGE)
-    print(constants.INPUT_INSTRUCTIONS)
     
-    name = game_test.get_name()
-    
-    towns = game_test.get_towns()
+    towns = init.get_towns()
     num_towns = len(towns)
     rng_towns = range(num_towns)
     
     managers = [0 for town in rng_towns]
-    (hometown, num_managers) = game_test.get_managers(towns)
+    (hometown, num_managers) = init.get_managers(towns)
     
     managers[towns.index(hometown)] = num_managers
     
-    period = game_test.get_time_frame()
-    potentials = game_test.get_potentials(towns)
-    network = game_test.get_network(towns)
+    period = init.get_timeframe()
+    potentials = init.get_potentials(towns)
+    network = init.get_network(towns)
 
     hotels = [0 for town in rng_towns]
     
@@ -112,9 +202,7 @@ def main():
             echo.clear()
         
         day += day_shift
-    
-            
-    
+      
     print("Spielende!\n")
     print("Gesamtgewinn im Spiel: " + str(score) + "\n")    
     
@@ -123,6 +211,6 @@ def main():
     print(constants.GOODBYE_MESSAGE)
 
 
+
 if __name__ == "__main__":
-    
-    main()
+     main()

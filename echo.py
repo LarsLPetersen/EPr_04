@@ -15,13 +15,14 @@ import constants
 
 def clear():
     """Clear the screen"""
+    
     os.system(constants.CLEAR)
 
     
 def headline(day):
     """Prints header in console for each day, containing mini instructions"""
     
-    print(constants.INSTRUCTIONS)
+    print(constants.MAIN_INSTRUCTIONS)
     
     main_line = 3 * "#" + 5 * " " + "SPIELTAG " + str(day) + 5 * " " + 3 * "#"
     print(len(main_line) * "#")
@@ -32,10 +33,6 @@ def headline(day):
 def status(distribution):
     """Prints the status of the game after the last move"""
 
-    #result = "\nStadt [# Manager, Hotel?, Potential, Gewinn]\n"
-    #for item in distribution.items():
-    #    result += str(item[1][0]) + " " + str(item[1][1:-1]) + "\n"
-    
     result = ""
     width_column1 = max([len(distribution[i][0]) for i in range(len(distribution))])
     
@@ -89,7 +86,7 @@ def infrastructure(state):
         width_first_column = max([len(state[i][0]) for i in rng_towns]) + 1
         
         # build the first row of the matrix
-        result = width_first_column * " "
+        result = (width_first_column + 5) * " "
         for i in rng_towns:
             result += " [" + str(i + 1) + "] "
         result += "\n"
@@ -97,7 +94,8 @@ def infrastructure(state):
         # build the following rows, so that the entries of the matrix
         # appear approximately in the middle of each column
         for town_index in rng_towns:
-            result += state[town_index][0].ljust(width_first_column)
+            result += ("[" + str(town_index + 1) + "] ").rjust(5) + \
+                       state[town_index][0].ljust(width_first_column)
             for adjacency_index in rng_towns:
                 if adjacency_index < 8:
                     result += "  " + \
@@ -109,7 +107,7 @@ def infrastructure(state):
                               "   "   
             result += "\n"
             
-    print("\nDas Straßennetz:\n")
+    #print("\nDas Straßennetz:\n")
     print(result)
 
 

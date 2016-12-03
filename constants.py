@@ -1,4 +1,4 @@
-"""Lists the constant parameters for the game 'Hotelmanagement'"""
+"""Lists the 'hyper'parameters for the game 'Hotelmanagement'"""
 
 __author__ = "6360278: Qasim Raza, 6290157: Lars Petersen"
 __copyright__ = ""
@@ -8,7 +8,6 @@ __email__ = "qasimr@icloud.com, petersen@informatik.uni-frankfurt.de"
 
 # built-in modules
 import os
-
 
 
 CLEAR = "cls" if os.name =="nt" else "clear"
@@ -21,7 +20,9 @@ LIST_OF_TOWNS = ["Berlin", "Hamburg", "München", "Köln", "Frankfurt", \
                  "Bochum", "Wuppertal", "Bielefeld", "Bonn", "Münster", \
                  "Kiel", "Lübeck", "Karlsruhe", "Darmstadt", "Kassel", \
                  "Würzburg", "Aachen", "Wolfsburg", "Hildesheim", "Gießen", \
-                 "Saarbrücken", "Kaiserslautern", "Mainz", "Wiesbaden"]
+                 "Saarbrücken", "Kaiserslautern", "Mainz", "Wiesbaden", \
+                 "Potsdam", "Cottbus", "Chemnitz", "Schwerin", "Rostock", \
+                 "Magdeburg", "Erfurt", "Gotha"]
                  
 MIN_NUM_MANAGERS_HOME = 5
 MAX_NUM_MANAGERS_HOME = 20
@@ -48,18 +49,32 @@ GAME_PARAMETERS = ["Städte initialisieren", "Anzahl der Manager und deren " + \
 SPECIAL_MOVES = ["quit!", "new game!", "help!", "status!"]
 SPECIAL_INPUT = ["quit!", "new game!", "help!"]
 
-INPUT_INSTRUCTIONS = "------------------------------------\n" + \
-                     "| 'quit!'     -> Spielende         |\n" + \
-                     "| 'new game!' -> Neue Runde        |\n" + \
-                     "| 'help!'     -> Anzeige Hilfe     |\n" + \
-                     "------------------------------------\n"
+INIT_INSTRUCTIONS = "\n------------ Kurzinfo -----------\n" + \
+                    "| 'quit!'     -> Spielende      |\n" + \
+                    "| 'new game!' -> Neue Runde     |\n" + \
+                    "| 'help!'     -> Anzeige Hilfe  |\n" + \
+                    "---------------------------------\n"
                      
-INSTRUCTIONS = "------------------------------------\n" + \
-               "| 'quit!'     -> Spielende         |\n" + \
-               "| 'new game!' -> Neue Runde        |\n" + \
-               "| 'status!'   -> Anzeige Status    |\n" + \
-               "| 'help!'     -> Anzeige Hilfe     |\n" + \
-               "------------------------------------\n"
+MAIN_INSTRUCTIONS = "\n---------Kurzinfo-------------------\n" + \
+                    "| 'quit!'     -> Spielende         |\n" + \
+                    "| 'new game!' -> Neue Runde        |\n" + \
+                    "| 'status!'   -> Anzeige Status    |\n" + \
+                    "| 'help!'     -> Anzeige Hilfe     |\n" + \
+                    "------------------------------------\n"
+
+INPUTS = "\nEingaben:\n" + \
+         "Sie sind gerade in der Initialisierungsphase des Spiels.\n" + \
+         "Hier werden Sie zur manuellen Eingabe der Spielparameter " + \
+         "aufgefordert.\n" + \
+         "Wahlweise kann dies auch der Computer übernehmen.\n\n" + \
+         "Sie haben auch immer die Möglichkeit, folgende Eingaben zu " + \
+         "machen:\n" + \
+         "a) 'quit!'<ENTER>     -> Spielende\n" + \
+         "b) 'new game!'<ENTER> -> Neue Runde\n" + \
+         "c) 'help!'<ENTER>     -> Aufruf dieser Hilfe\n\n" + \
+         "ACHTUNG:\n" + \
+         "Sie müssen sich immer exakt an die geforderte Syntax halten.\n\n" + \
+         "Durch <ENTER> können Sie auch zwischendurch weiterschalten.\n"
 
 MOVES = "\nSpielzüge:\n" + \
         "1. 'pass'<ENTER>\n" + \
@@ -70,14 +85,14 @@ MOVES = "\nSpielzüge:\n" + \
         "    -> Bewegen Sie number Manager aus city1 in city2.\n" + \
         "4. 'hire: city'<ENTER>\n" + \
         "    -> Stellen Sie einen Manager in city ein.\n\n" + \
-        "ACHTUNG:\n" + \
-        "Sie müssen sich exakt an die Syntax halten.\n" + \
-        "Es werden außerdem Konsistenzprüfungen durchgeführt.\n\n" + \
         "Weitere Optionen:\n" + \
         "a) 'quit!'<ENTER>     -> Spielende\n" + \
         "b) 'new game!'<ENTER> -> Neue Runde\n" + \
         "c) 'status!'<ENTER>   -> Status anzeigen\n" + \
         "d) 'help!'<ENTER>     -> Aufruf dieser Hilfe\n\n" + \
+        "ACHTUNG:\n" + \
+        "Sie müssen sich exakt an die Syntax halten.\n" + \
+        "Es werden außerdem Konsistenzprüfungen durchgeführt.\n\n" + \
         "Durch <ENTER> können Sie auch zwischendurch weiterschalten.\n"
 
 NEW_HIGHSCORE_MESSAGE = "Glückwunsch!\n" + \
@@ -89,10 +104,6 @@ NO_HIGHSCORE_MESSAGE = "Leider erhalten Sie für dieses Spiel keinen " + \
 REPEATING_HIGHSCORE_MESSAGE = "Es existiert bereits ein identischer " + \
                               "in der Highscore-Liste."
 
-WELCOME_MESSAGE = \
-        33 * "#" + "\n" + \
-        4 * "#" + 5 * " " + "Hotelmanagement" + 5 * " " + 4 * "#" + "\n" + \
-        33 * "#" + "\n\n" + \
-        "Herzlich Willkommen zum Spiel!\n"
+WELCOME_MESSAGE = "\nWillkommen zum Spiel 'Hotelmanagement'!\n"
 
 GOODBYE_MESSAGE = "Auf Wiedersehen!\n"
